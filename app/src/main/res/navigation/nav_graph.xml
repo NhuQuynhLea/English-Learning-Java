@@ -7,30 +7,52 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.englishlearning.fragment.HomeFragment"
+        android:name="com.example.englishlearning.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
 
     </fragment>
     <fragment
         android:id="@+id/myListFragment"
-        android:name="com.example.englishlearning.fragment.MyListFragment"
+        android:name="com.example.englishlearning.mylist.MyListFragment"
         android:label="fragment_my_list"
-        tools:layout="@layout/fragment_my_list" />
+        tools:layout="@layout/fragment_my_list" >
+        <action
+            android:id="@+id/action_myListFragment_to_flashCardFragment"
+            app:destination="@id/flashCardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/createModuleFragment"
-        android:name="com.example.englishlearning.fragment.CreateModuleFragment"
+        android:name="com.example.englishlearning.mylist.CreateModuleFragment"
         android:label="fragment_create_module"
         tools:layout="@layout/fragment_create_module" >
 
+        <action
+            android:id="@+id/action_createModuleFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.englishlearning.fragment.MainFragment"
+        android:name="com.example.englishlearning.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_createModuleFragment"
             app:destination="@id/createModuleFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_flashCardFragment"
+            app:destination="@id/flashCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/flashCardFragment"
+        android:name="com.example.englishlearning.flashcard.FlashCardFragment"
+        android:label="fragment_flash_card"
+        tools:layout="@layout/fragment_flash_card" >
+        <argument
+            android:name="module"
+            app:argType="com.example.englishlearning.model.Module" />
+        <action
+            android:id="@+id/action_flashCardFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

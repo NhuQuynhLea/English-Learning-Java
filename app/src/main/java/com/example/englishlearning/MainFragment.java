@@ -1,6 +1,5 @@
-package com.example.englishlearning.fragment;
+package com.example.englishlearning;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,10 +11,11 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.FragmentMainBinding;
+import com.example.englishlearning.home.HomeFragment;
+import com.example.englishlearning.mylist.MyListFragment;
 
 public class MainFragment extends Fragment {
     private FragmentMainBinding binding;
@@ -52,6 +52,7 @@ public class MainFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout,fragment);
         fragmentTransaction.commit();
+
     }
 
 }

@@ -10,15 +10,18 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.englishlearning.database.dao.ModuleDAO;
+import com.example.englishlearning.database.dao.TermDAO;
 import com.example.englishlearning.database.dao.UserDAO;
 import com.example.englishlearning.model.Module;
+import com.example.englishlearning.model.Term;
 import com.example.englishlearning.model.User;
 
-@Database(entities = {User.class, Module.class}, version = 4,exportSchema = false)
+@Database(entities = {User.class, Module.class, Term.class}, version = 7,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
     public abstract UserDAO userDAO();
     public abstract ModuleDAO moduleDAO();
+    public abstract TermDAO termDAO();
 
     public static synchronized AppDatabase getInstance(Context context){
         if(instance == null){

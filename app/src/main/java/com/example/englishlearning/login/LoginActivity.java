@@ -1,29 +1,20 @@
-package com.example.englishlearning.ui;
+package com.example.englishlearning.login;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.englishlearning.R;
+import com.example.englishlearning.MainActivity;
 import com.example.englishlearning.databinding.ActivityLoginBinding;
-import com.example.englishlearning.fragment.CreateModuleFragment;
 import com.example.englishlearning.model.User;
-import com.example.englishlearning.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

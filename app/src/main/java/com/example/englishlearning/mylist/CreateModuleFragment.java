@@ -1,28 +1,25 @@
-package com.example.englishlearning.fragment;
+package com.example.englishlearning.mylist;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
-import android.preference.PreferenceManager;
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.FragmentCreateModuleBinding;
 import com.example.englishlearning.model.Module;
-import com.example.englishlearning.viewmodel.ModuleViewModel;
-import com.example.englishlearning.viewmodel.UserViewModel;
 
 public class CreateModuleFragment extends Fragment {
     private ModuleViewModel moduleViewModel;
@@ -31,6 +28,8 @@ public class CreateModuleFragment extends Fragment {
     private EditText description;
     private Button saveBtn;
     private int userId;
+    private final int GALLERY = 1000;
+    private ImageView imageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,12 +59,37 @@ public class CreateModuleFragment extends Fragment {
 
             }
         });
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_mainFragment);
+            }
+        });
+        binding.btnImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent iGallery = new Intent(Intent.ACTION_PICK);
+                iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(iGallery,GALLERY);
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == -1){
+            if(requestCode == GALLERY){
+                imageView.setImageURI(data.getData());
+            }
+        }
     }
 
     private void initComponents() {
         title = binding.edtTitle;
         description = binding.edtDescription;
         saveBtn = binding.btnSave;
+        imageView = binding.imageView;
 //        SharedPreferences sharedPre = getActivity().getApplicationContext().getSharedPreferences("userID", Context.MODE_PRIVATE);
 //        int userId = sharedPre.getInt("ID", -1);
   //      userId = this.getArguments().getInt("ID");

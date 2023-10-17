@@ -1,4 +1,4 @@
-package com.example.englishlearning.ui;
+package com.example.englishlearning.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.example.englishlearning.databinding.ActivityRegisterBinding;
 import com.example.englishlearning.model.User;
-import com.example.englishlearning.viewmodel.UserViewModel;
 
 import java.util.List;
 
