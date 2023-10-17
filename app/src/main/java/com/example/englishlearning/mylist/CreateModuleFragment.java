@@ -1,6 +1,7 @@
 package com.example.englishlearning.mylist;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class CreateModuleFragment extends Fragment {
     private int userId;
     private final int GALLERY = 1000;
     private ImageView imageView;
+    private Uri uri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,8 @@ public class CreateModuleFragment extends Fragment {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Module module = new Module(1,title.getText().toString(),description.getText().toString());
+
+                Module module = new Module(1,title.getText().toString(),description.getText().toString(),uri);
                 moduleViewModel.addModule(module);
 
                // Toast.makeText(getContext(),userId,Toast.LENGTH_SHORT).show();
@@ -80,7 +83,8 @@ public class CreateModuleFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == -1){
             if(requestCode == GALLERY){
-                imageView.setImageURI(data.getData());
+                 uri = data.getData();
+                imageView.setImageURI(uri);
             }
         }
     }

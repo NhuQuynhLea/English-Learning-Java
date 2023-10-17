@@ -1,5 +1,7 @@
 package com.example.englishlearning.model;
 
+import android.net.Uri;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -13,14 +15,18 @@ public class Module implements Serializable {
     private int userId;
     private String title;
     private String description;
+    private Uri background;
 
     public Module() {
     }
 
-    public Module(int userId, String title, String description) {
+
+
+    public Module(int userId, String title, String description, Uri background) {
         this.userId = userId;
         this.title = title;
         this.description = description;
+        this.background = background;
     }
 
     public int getId() {
@@ -53,5 +59,12 @@ public class Module implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public Uri getBackground() {
+        return background;
+    }
+
+    public void setBackground(Uri background) {
+        this.background = background;
     }
 }

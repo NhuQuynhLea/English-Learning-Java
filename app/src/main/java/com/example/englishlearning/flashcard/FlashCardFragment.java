@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FlashCardFragment extends Fragment  {
+public class FlashCardFragment extends Fragment implements OpenDialogListener  {
     private FlashCardViewModel flashCardViewModel;
     private FragmentFlashCardBinding binding;
     private RecyclerView recyclerView;
@@ -95,7 +95,7 @@ public class FlashCardFragment extends Fragment  {
     private void initComponents() {
         recyclerView = binding.recyclerview;
         flashCardList = new ArrayList<>();
-        adapter = new FlashCardAdapter(flashCardList,getContext());
+        adapter = new FlashCardAdapter(flashCardList,getContext(),this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         progressBar = binding.progressBar;
@@ -107,5 +107,10 @@ public class FlashCardFragment extends Fragment  {
     }
 
 
-
+    @Override
+    public void onOpenDialog(Term term) {
+      //  Toast.makeText(getContext(),term.getWord(), Toast.LENGTH_SHORT).show();
+        ShowFlashCardFragment showFlashCardFragment = new ShowFlashCardFragment(term);
+        showFlashCardFragment.show(getParentFragmentManager(),"show dialog");
+    }
 }

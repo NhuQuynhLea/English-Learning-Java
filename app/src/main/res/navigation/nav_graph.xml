@@ -54,5 +54,22 @@
         <action
             android:id="@+id/action_flashCardFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_flashCardFragment_to_showFlashCardFragment"
+            app:destination="@id/showFlashCardFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/showFlashCardFragment"
+        android:name="com.example.englishlearning.flashcard.ShowFlashCardFragment"
+        android:label="fragment_show_flash_card"
+        tools:layout="@layout/fragment_show_flash_card" >
+        <action
+            android:id="@+id/action_showFlashCardFragment_to_showDetailFlashCardFragment"
+            app:destination="@id/showDetailFlashCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/showDetailFlashCardFragment"
+        android:name="com.example.englishlearning.flashcard.ShowDetailFlashCardFragment"
+        android:label="fragment_show_detail_flash_card"
+        tools:layout="@layout/fragment_show_detail_flash_card" />
 </navigation>

@@ -62,6 +62,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
 //                flashCardFragment.setArguments(bundle);
             }
         });
+
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,13 +42,14 @@ import retrofit2.Response;
 public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyViewHolder> {
 
     List<Term> listTerms ;
-    Context context;
-    //onFetchDataListener listener;
+     Context context;
+    private OpenDialogListener listener;
     String uri = "";
 
-    public FlashCardAdapter(List<Term> listTerms, Context context) {
+    public FlashCardAdapter(List<Term> listTerms, Context context, OpenDialogListener listener ) {
         this.listTerms = listTerms;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -84,7 +86,15 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
 
             }
         });
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               listener.onOpenDialog(term);
+            }
+        });
     }
+
+
 
     private void onCallApi(String word,int position) throws IOException {
         Call<List<WordResponse>> call = RetrofitClient
@@ -131,16 +141,15 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView word;
         ImageView vol;
+        CardView cardView;
         public MyViewHolder(@NonNull ItemFlashcardBinding itemView) {
             super(itemView.getRoot());
             word = itemView.txtWord;
             vol = itemView.vol;
+            cardView = itemView.cardView;
 
         }
     }
-//    public interface onFetchDataListener {
-//        void onFetchData(WordResponse wordResponse, String message);
-//        void onError(String message);
-//    }
+
 
 }
