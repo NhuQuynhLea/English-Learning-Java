@@ -6,24 +6,27 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="81dp"
         app:cardUseCompatPadding="true"
-        app:cardElevation="10dp"
+        app:cardElevation="8dp"
         app:cardCornerRadius="8dp"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop = "8dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop = "5dp"
         >
         <RelativeLayout
             android:id="@+id/layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="12dp"
+            android:layout_marginHorizontal="12dp"
             >
             <TextView
                 android:id="@+id/txt_word"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="New Word"/>
+                android:text="New Word"
+                style="@style/TextAppearance.AppCompat.Title"/>
             <ImageButton
                 android:id="@+id/vol"
                 android:layout_width="wrap_content"
@@ -31,6 +34,7 @@
                 android:src="@drawable/baseline_volume_up_24"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="24dp"
+                android:background="@android:color/transparent"
                 />
 
         </RelativeLayout>

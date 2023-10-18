@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.englishlearning.database.dao.ModuleDAO;
@@ -16,7 +17,7 @@ import com.example.englishlearning.model.Module;
 import com.example.englishlearning.model.Term;
 import com.example.englishlearning.model.User;
 
-@Database(entities = {User.class, Module.class, Term.class}, version = 7,exportSchema = false)
+@Database(entities = {User.class, Module.class, Term.class}, version = 9,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
     public abstract UserDAO userDAO();

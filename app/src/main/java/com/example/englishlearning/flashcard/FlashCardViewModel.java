@@ -37,4 +37,8 @@ public class FlashCardViewModel extends AndroidViewModel {
     public LiveData<List<Term>> getAllTermsById(int module_id){
         return repository.getAllTermsById(module_id);
     }
+
+    public void deleteAllTerms(int module_id){
+        repository.deleteAllTerms(module_id);
+    }
 }

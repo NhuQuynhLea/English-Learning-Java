@@ -36,6 +36,9 @@ public class TermRepository {
     public LiveData<List<Term>> getAllTermsById(int module_id){
         return termDAO.getAllTermsById(module_id);
     }
+    public void deleteAllTerms(int module_id){
+        new TermRepository.DeleteAllTermAsyncTask(termDAO,module_id).execute();
+    }
 
     public static class InsertTermAsyncTask extends AsyncTask<Term,Void,Void> {
         private TermDAO termDAO;
@@ -67,6 +70,20 @@ public class TermRepository {
         @Override
         protected Void doInBackground(Term... terms) {
             termDAO.deleteTerm(terms[0]);
+            return null;
+        }
+    }
+    public static class DeleteAllTermAsyncTask extends AsyncTask<Term,Void,Void> {
+        private TermDAO termDAO;
+        private int module_id;
+        private DeleteAllTermAsyncTask (TermDAO termDAO, int module_id){
+
+            this.termDAO = termDAO;
+            this.module_id = module_id;
+        }
+        @Override
+        protected Void doInBackground(Term... terms) {
+            termDAO.deleteAllTerms(module_id);
             return null;
         }
     }

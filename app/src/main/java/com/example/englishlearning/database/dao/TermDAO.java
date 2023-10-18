@@ -25,4 +25,7 @@ public interface TermDAO {
 
     @Query("SELECT * FROM term_table WHERE module_id = :module_id")
     LiveData<List<Term>> getAllTermsById(int module_id);
+
+    @Query("DELETE FROM term_table WHERE module_id = :module_id")
+    void deleteAllTerms(int module_id);
 }

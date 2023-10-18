@@ -2,8 +2,13 @@ package com.example.englishlearning.model;
 
 import android.net.Uri;
 
+import androidx.annotation.Nullable;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import java.io.Serializable;
 
@@ -15,18 +20,19 @@ public class Module implements Serializable {
     private int userId;
     private String title;
     private String description;
-    private Uri background;
+    @ColumnInfo(defaultValue = "")
+    private String image;
 
     public Module() {
     }
 
 
 
-    public Module(int userId, String title, String description, Uri background) {
+    public Module(int userId, String title, String description, String image) {
         this.userId = userId;
         this.title = title;
         this.description = description;
-        this.background = background;
+        this.image = image;
     }
 
     public int getId() {
@@ -60,11 +66,12 @@ public class Module implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Uri getBackground() {
-        return background;
+
+    public String getImage() {
+        return image;
     }
 
-    public void setBackground(Uri background) {
-        this.background = background;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

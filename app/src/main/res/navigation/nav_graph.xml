@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_myListFragment_to_flashCardFragment"
             app:destination="@id/flashCardFragment" />
+        <action
+            android:id="@+id/action_myListFragment_to_createModuleFragment"
+            app:destination="@id/createModuleFragment" />
     </fragment>
     <fragment
         android:id="@+id/createModuleFragment"
@@ -30,6 +33,9 @@
         <action
             android:id="@+id/action_createModuleFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="module"
+            app:argType="com.example.englishlearning.model.Module" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"

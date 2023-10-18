@@ -4,10 +4,14 @@ import static android.app.PendingIntent.getActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +29,7 @@ import com.example.englishlearning.flashcard.FlashCardFragment;
 import com.example.englishlearning.model.Module;
 
 import java.util.List;
+import java.util.Objects;
 
 public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHolder> {
 
@@ -62,7 +67,31 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
 //                flashCardFragment.setArguments(bundle);
             }
         });
+//        if(!Objects.equals(module.getImage(), "")){
+//            Uri imgUri= Uri.parse(module.getImage());
+//            holder.imageView.setImageURI(imgUri);
+//        }
 
+        holder.menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(context, holder.menu);
+                popupMenu.inflate(R.menu.popup_menu_module);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        if(menuItem.getItemId() == R.id.delete){
+                            listener.onDelete(module);
+                        }
+                        else if(menuItem.getItemId() == R.id.edit){
+                            listener.onEdit(module,view);
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
     }
 
     @Override
@@ -81,11 +110,15 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
         TextView title;
         TextView description;
         CardView cardView;
+        ImageView imageView;
+        ImageView menu;
         public MyViewHolder(@NonNull ItemMylistBinding itemView) {
             super(itemView.getRoot());
             title = itemView.txtTitle;
             description = itemView.txtDescription;
             cardView = itemView.cardView;
+            imageView = itemView.imgModule;
+            menu = itemView.imgMenu;
         }
     }
 

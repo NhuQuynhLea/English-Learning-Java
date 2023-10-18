@@ -40,6 +40,7 @@ public class MyListFragment extends Fragment implements SelectListener{
     private RecyclerView recyclerView;
     private MyListAdapter adapter;
     private ArrayList<Module> moduleList ;
+    private FlashCardViewModel flashCardViewModel;
 
 
     @Override
@@ -53,6 +54,7 @@ public class MyListFragment extends Fragment implements SelectListener{
                              Bundle savedInstanceState) {
       binding = FragmentMyListBinding.inflate(inflater,container,false);
        moduleViewModel = new ViewModelProvider(this).get(ModuleViewModel.class);
+       flashCardViewModel = new ViewModelProvider(this).get(FlashCardViewModel.class);
         moduleViewModel.getAllModules().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
             @Override
             public void onChanged(List<Module> modules) {
@@ -91,6 +93,19 @@ public class MyListFragment extends Fragment implements SelectListener{
         Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_flashCardFragment,bundle);
     }
 
+    @Override
+    public void onDelete(Module module) {
+        moduleViewModel.deleteModule(module);
+        flashCardViewModel.deleteAllTerms(module.getId());
+    }
+
+    @Override
+    public void onEdit(Module module, View view) {
+        Toast.makeText(getContext(),"Edit", Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("updateModule",module);
+        Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_createModuleFragment,bundle);
+    }
 
 
 }

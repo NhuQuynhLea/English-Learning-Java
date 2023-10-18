@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.FragmentCreateModuleBinding;
@@ -31,7 +32,9 @@ public class CreateModuleFragment extends Fragment {
     private int userId;
     private final int GALLERY = 1000;
     private ImageView imageView;
-    private Uri uri;
+    private Uri uri = null;
+    private Module module;
+    private String image;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,14 +54,39 @@ public class CreateModuleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initComponents();
+        Bundle bundle = new Bundle();
+        module = new Module();
+        module = (Module) getArguments().getSerializable("updateModule");
+        if(module != null){
+            title.setText(module.getTitle());
+            if(module.getDescription() != null){
+                description.setText(module.getDescription());
+            }
+            image = module.getImage();
+
+        }
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Module module = new Module(1,title.getText().toString(),description.getText().toString(),uri);
-                moduleViewModel.addModule(module);
+                if(module == null){
+                    if(uri != null){
+                        image = uri.toString();
+                    }else {
+                        image = "";
+                    }
+                    Module newModule = new Module(1,title.getText().toString(),description.getText().toString(),image);
+                    moduleViewModel.addModule(newModule);
 
-               // Toast.makeText(getContext(),userId,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Create new module successful",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Module editModule = new Module(1,title.getText().toString(),description.getText().toString(),image );
+                    editModule.setId(module.getId());
+                    moduleViewModel.updateModule(editModule);
+                    Toast.makeText(getContext(),"Update module successful",Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
