@@ -2,6 +2,7 @@ package com.example.englishlearning.flashcard;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ public class ShowDetailFlashCardFragment extends AppCompatDialogFragment {
     Term term;
     TextView definitionTxt;
     TextView exampleTxt;
+    ImageButton editBtn;
+    TextView wordTxt;
 
     public ShowDetailFlashCardFragment(Term term) {
 
@@ -42,9 +46,20 @@ public class ShowDetailFlashCardFragment extends AppCompatDialogFragment {
 
        definitionTxt =view.findViewById(R.id.txt_definition);
        exampleTxt = view.findViewById(R.id.txt_example);
-
+       editBtn = view.findViewById(R.id.btn_edit);
+       wordTxt = view.findViewById(R.id.txt_word);
        definitionTxt.setText(term.getDefinition());
        exampleTxt.setText(term.getExample());
+       wordTxt.setText(term.getWord());
+       editBtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Toast.makeText(getContext(),"Edit", Toast.LENGTH_SHORT).show();
+               CreateFlashCardFragment createFlashCardFragment = new CreateFlashCardFragment(term.getModule_id(),term);
+               createFlashCardFragment.show(getParentFragmentManager(),"");
+               dismiss();
+           }
+       });
         return builder.create();
     }
 

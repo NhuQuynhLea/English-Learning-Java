@@ -101,7 +101,7 @@ public class MyListFragment extends Fragment implements SelectListener{
 
     @Override
     public void onEdit(Module module, View view) {
-        Toast.makeText(getContext(),"Edit", Toast.LENGTH_SHORT).show();
+
         Bundle bundle = new Bundle();
         bundle.putSerializable("updateModule",module);
         Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_createModuleFragment,bundle);

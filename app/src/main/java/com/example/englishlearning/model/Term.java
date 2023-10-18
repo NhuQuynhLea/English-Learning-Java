@@ -12,6 +12,7 @@ public class Term {
     private String definition;
     private String example;
 
+
     public String getDefinition() {
         return definition;
     }

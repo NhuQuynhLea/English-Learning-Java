@@ -31,6 +31,8 @@ import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,6 +47,7 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
      Context context;
     private OpenDialogListener listener;
     String uri = "";
+    HashMap<Integer, String> phonetics = new HashMap<>();
 
     public FlashCardAdapter(List<Term> listTerms, Context context, OpenDialogListener listener ) {
         this.listTerms = listTerms;
@@ -75,7 +78,7 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
                     MediaPlayer player = new MediaPlayer();
                     try{
                         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        player.setDataSource(uri);
+                        player.setDataSource(phonetics.get(position));
                         player.prepare();
                         player.start();
                     }catch (IOException e) {
@@ -83,7 +86,7 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
                         Toast.makeText(context,"Couldn't play audio", Toast.LENGTH_SHORT).show();
                     }
                 }
-
+               // Toast.makeText(context,listTerms.size(), Toast.LENGTH_SHORT).show();
             }
         });
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -110,11 +113,14 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
                     Toast.makeText(context,"Error", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!response.body().get(0).getPhonetics().isEmpty()) {
-                    uri = response.body().get(0).getPhonetics().get(position).getAudio();
-                    Toast.makeText(context, uri, Toast.LENGTH_SHORT).show();
-                }
+                if(response.body().get(0).getPhonetics()!= null){
 
+                     uri = response.body().get(0).getPhonetics().get(0).getAudio();
+//                    if(!response.body().get(0).getPhonetics().isEmpty()) {
+                     phonetics.put(position,uri);
+                        Toast.makeText(context, uri, Toast.LENGTH_SHORT).show();
+//                    }
+                }
 
                 }
 

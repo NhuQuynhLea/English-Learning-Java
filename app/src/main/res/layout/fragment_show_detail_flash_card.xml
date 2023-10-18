@@ -1,21 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".flashcard.ShowDetailFlashCardFragment">
-
-    <TextView
-        android:id="@+id/txt_definition"
+    tools:context=".flashcard.ShowDetailFlashCardFragment"
+   >
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Definition"
-       />
-    <TextView
-        android:id="@+id/txt_example"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Example"
-        android:layout_below="@+id/txt_definition"/>
+        android:layout_height="match_parent"
+        android:layout_marginVertical="24dp"
+        android:layout_marginHorizontal="24dp">
 
-</RelativeLayout>
+        <ImageButton
+            android:id="@+id/btn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/baseline_edit_24"
+            android:background="@android:color/transparent"
+            />
+        <TextView
+            android:id="@+id/txt_word"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_centerHorizontal="true"
+            android:text="Text" />
+        <TextView
+            android:id="@+id/text_definition"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="339dp"
+            android:layout_height="38dp"
+            android:layout_marginStart="12dp"
+            android:text="Definition:"
+            android:layout_below="@+id/txt_word"/>
+
+        <TextView
+            android:id="@+id/txt_definition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Definition"
+            android:layout_below="@+id/text_definition"
+            />
+        <TextView
+            android:id="@+id/text_example"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example:"
+            android:layout_marginStart="12dp"
+            android:layout_below="@+id/txt_definition"
+            style="@style/TextAppearance.AppCompat.Title"/>
+        <TextView
+            android:id="@+id/txt_example"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Example"
+            android:layout_below="@+id/text_example"/>
+    </RelativeLayout>
+
+
+</FrameLayout>

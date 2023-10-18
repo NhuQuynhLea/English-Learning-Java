@@ -4,6 +4,7 @@ public class Phonetics {
     String text = "";
     String audio = "";
 
+
     public String getText() {
         return text;
     }

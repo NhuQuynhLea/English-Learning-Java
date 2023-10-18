@@ -75,7 +75,8 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
 
             @Override
             public void onClick(View view) {
-                openDialog(module.getId());
+
+                openDialog(module.getId(), null);
             }
         });
 
@@ -101,8 +102,8 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         progressBar = binding.progressBar;
     }
 
-    public void openDialog(int moduleId){
-        CreateFlashCardFragment createFlashCardFragment = new CreateFlashCardFragment(moduleId);
+    public void openDialog(int moduleId, Term term){
+        CreateFlashCardFragment createFlashCardFragment = new CreateFlashCardFragment(moduleId,term);
         createFlashCardFragment.show(getParentFragmentManager(),"create dialog");
     }
 
