@@ -36,6 +36,15 @@ public class ModuleViewModel extends AndroidViewModel {
     public LiveData<List<Module>> getAllModules(){
         return allModules;
     }
+    public LiveData<List<Module>> searchModules(String searchQuery){
+        return repository.searchModules(searchQuery);
+    }
+    public LiveData<List<Module>> getAllModulesByTitle(){
+        return repository.getAllModulesByTitle();
+    }
+    public LiveData<List<Module>> getAllModulesByTitleDESC(){
+        return repository.getAllModulesByTitleDESC();
+    }
 //    public Observable<List<Module>> getAllModules(){
 //        return Observable.fromArray(allModules.getValue());
 //    }

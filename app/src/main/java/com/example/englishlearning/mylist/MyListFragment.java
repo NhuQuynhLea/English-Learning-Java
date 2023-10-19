@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,6 +21,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -34,14 +37,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MyListFragment extends Fragment implements SelectListener{
+public class MyListFragment extends Fragment implements SelectListener {
     private ModuleViewModel moduleViewModel;
     private FragmentMyListBinding binding;
     private RecyclerView recyclerView;
     private MyListAdapter adapter;
     private ArrayList<Module> moduleList ;
     private FlashCardViewModel flashCardViewModel;
-
+    private boolean ascending = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +67,58 @@ public class MyListFragment extends Fragment implements SelectListener{
             }
         });
 
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(!query.isEmpty()){
+                    filterList(query);
+                }
+                else{
+                    adapter.setModules(moduleList);
+                }
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(!newText.isEmpty()){
+                    filterList(newText);
+                }else{
+                    adapter.setModules(moduleList);
+                }
+                return true;
+            }
+        });
+        binding.btnSort.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSortItem(ascending);
+                ascending = !ascending;
+            }
+        });
         return binding.getRoot();
     }
+
+    private void onSortItem(boolean ascending) {
+        if(ascending){
+            moduleViewModel.getAllModulesByTitleDESC().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+                @Override
+                public void onChanged(List<Module> modules) {
+                    adapter.setModules(modules);
+                }
+            });
+            Toast.makeText(getContext(), "Sort by title descending", Toast.LENGTH_SHORT).show();
+        }else{
+            moduleViewModel.getAllModulesByTitle().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+                @Override
+                public void onChanged(List<Module> modules) {
+                    adapter.setModules(modules);
+                }
+            });
+            Toast.makeText(getContext(), "Sort by title ascending", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,7 +133,14 @@ public class MyListFragment extends Fragment implements SelectListener{
         adapter = new MyListAdapter(moduleList,getContext(),this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
+    }
+    private void filterList(String query){
+        moduleViewModel.searchModules(query).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+            @Override
+            public void onChanged(List<Module> modules) {
+                adapter.setModules(modules);
+            }
+        });
     }
 
     @Override

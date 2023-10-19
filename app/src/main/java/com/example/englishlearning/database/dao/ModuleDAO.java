@@ -23,5 +23,11 @@ public interface ModuleDAO {
     void deleteModule(Module module);
     @Query("SELECT * FROM module_table")
     LiveData<List<Module>> getAllModules();
+    @Query("SELECT * FROM module_table WHERE title LIKE '%' || :searchQuery || '%'")
+    LiveData<List<Module>> searchModules(String searchQuery);
 
+    @Query("SELECT * FROM module_table ORDER BY title")
+    LiveData<List<Module>> getAllModulesByTitle();
+    @Query("SELECT * FROM module_table ORDER BY title DESC")
+    LiveData<List<Module>> getAllModulesByTitleDESC();
 }
