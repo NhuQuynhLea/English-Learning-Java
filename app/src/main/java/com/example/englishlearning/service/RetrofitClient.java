@@ -10,7 +10,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
-    private static String BASE_URL = "https://api.dictionaryapi.dev/api/v2/";
+    private static final String BASE_URL = "https://api.dictionaryapi.dev/api/v2/";
+    public static final String API_KEY = "mmGQuiGYiuELEIgl63lSEO8mLjGpl7pHsSyWtxJMDNc";
     private static RetrofitClient retrofitClient;
     private static Retrofit retrofit;
 

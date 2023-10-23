@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_flashCardFragment_to_showFlashCardFragment"
             app:destination="@id/showFlashCardFragment" />
+        <action
+            android:id="@+id/action_flashCardFragment_to_quizzFragment"
+            app:destination="@id/quizzFragment" />
     </fragment>
     <fragment
         android:id="@+id/showFlashCardFragment"
@@ -78,4 +81,16 @@
         android:name="com.example.englishlearning.flashcard.ShowDetailFlashCardFragment"
         android:label="fragment_show_detail_flash_card"
         tools:layout="@layout/fragment_show_detail_flash_card" />
+    <fragment
+        android:id="@+id/quizzFragment"
+        android:name="com.example.englishlearning.quizz.QuizzFragment"
+        android:label="fragment_quizz"
+        tools:layout="@layout/fragment_quizz" >
+        <action
+            android:id="@+id/action_quizzFragment_to_flashCardFragment"
+            app:destination="@id/flashCardFragment" />
+        <argument
+            android:name="flashcardlist"
+            app:argType="com.example.englishlearning.model.Term" />
+    </fragment>
 </navigation>

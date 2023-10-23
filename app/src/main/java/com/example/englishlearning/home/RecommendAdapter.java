@@ -1,60 +1,49 @@
-package com.example.englishlearning.mylist;
-
-import static android.app.PendingIntent.getActivity;
+package com.example.englishlearning.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.englishlearning.R;
+import com.example.englishlearning.databinding.ItemHomelistBinding;
 import com.example.englishlearning.databinding.ItemMylistBinding;
-import com.example.englishlearning.flashcard.FlashCardFragment;
 import com.example.englishlearning.model.Module;
+import com.example.englishlearning.mylist.SelectListener;
 
-import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
-public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHolder> {
+public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.MyViewHolder> {
 
-     List<Module> listModules ;
+    List<Module> recommendModules ;
     Context context;
     private SelectListener listener;
 
-    public MyListAdapter(List<Module> listModules, Context context, SelectListener listener) {
-        this.listModules = listModules;
+    public RecommendAdapter(List<Module> listModules, Context context, SelectListener listener) {
+        this.recommendModules = listModules;
         this.context = context;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemMylistBinding binding = ItemMylistBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
-        return new MyViewHolder(binding);
+    public RecommendAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemHomelistBinding binding = ItemHomelistBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        return new RecommendAdapter.MyViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Module module = listModules.get(position);
+    public void onBindViewHolder(@NonNull RecommendAdapter.MyViewHolder holder, int position) {
+        Module module = recommendModules.get(position);
         holder.title.setText(module.getTitle());
         holder.description.setText(module.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -63,10 +52,10 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
                 listener.onItemClicked(module,view);
             }
         });
-        if(!Objects.equals(module.getImage(), "")){
-            Uri imgUri= Uri.parse(module.getImage());
-            holder.imageView.setImageURI(imgUri);
-        }
+//        if(!Objects.equals(module.getImage(), "")){
+//            Uri imgUri= Uri.parse(module.getImage());
+//            holder.imageView.setImageURI(imgUri);
+//        }
 
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,13 +81,13 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        return listModules.size();
+        return recommendModules.size();
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void setModules(List<Module> modules){
-        this.listModules = modules;
-       // Toast.makeText(context,modules.size(),Toast.LENGTH_SHORT).show(); Loi o day
+        this.recommendModules = modules;
+        // Toast.makeText(context,modules.size(),Toast.LENGTH_SHORT).show(); Loi o day
         notifyDataSetChanged();
     }
 
@@ -108,7 +97,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
         CardView cardView;
         ImageView imageView;
         ImageView menu;
-        public MyViewHolder(@NonNull ItemMylistBinding itemView) {
+        public MyViewHolder(@NonNull ItemHomelistBinding itemView) {
             super(itemView.getRoot());
             title = itemView.txtTitle;
             description = itemView.txtDescription;
@@ -120,3 +109,4 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
 
 
 }
+

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.cardview.widget.CardView;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.ItemFlashcardBinding;
 import com.example.englishlearning.databinding.ItemMylistBinding;
@@ -25,6 +27,7 @@ import com.example.englishlearning.model.Module;
 import com.example.englishlearning.model.Term;
 import com.example.englishlearning.model.WordResponse;
 import com.example.englishlearning.service.RetrofitClient;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -95,6 +98,11 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
                listener.onOpenDialog(term);
             }
         });
+        if(term.getImage()!= null){
+            Uri imgUri= Uri.parse(term.getImage());
+            Glide.with(context).load(imgUri).into(holder.imgWord);
+            holder.imgWord.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
     }
 
 
@@ -148,11 +156,13 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
         TextView word;
         ImageView vol;
         CardView cardView;
+        ShapeableImageView imgWord;
         public MyViewHolder(@NonNull ItemFlashcardBinding itemView) {
             super(itemView.getRoot());
             word = itemView.txtWord;
             vol = itemView.vol;
             cardView = itemView.cardView;
+            imgWord = itemView.imgWord;
 
         }
     }

@@ -1,5 +1,6 @@
 package com.example.englishlearning.flashcard;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +34,7 @@ import com.example.englishlearning.mylist.MyListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class FlashCardFragment extends Fragment implements OpenDialogListener  {
@@ -105,7 +107,14 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
 
         });
 
-
+        binding.btnQuizz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("flashcardList",flashCardList);
+                Navigation.findNavController(view).navigate(R.id.action_flashCardFragment_to_quizzFragment,bundle);
+            }
+        });
 
         return binding.getRoot();
     }
@@ -122,6 +131,7 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initComponents();
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwiftToDeleteItem(adapter,flashCardViewModel,view));
         itemTouchHelper.attachToRecyclerView(recyclerView);
         title.setText(module.getTitle());
@@ -139,7 +149,12 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         title = binding.txtTitle;
         num = binding.txtNum;
         imgBackground = binding.imageView;
-    }
+        if(!Objects.equals(module.getImage(), "")) {
+            Uri imgUri = Uri.parse(module.getImage());
+            imgBackground.setImageURI(imgUri);
+            imgBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+     }
 
     public void openDialog(int moduleId, Term term){
         CreateFlashCardFragment createFlashCardFragment = new CreateFlashCardFragment(moduleId,term);

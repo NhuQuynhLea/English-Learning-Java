@@ -44,24 +44,26 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
     //room
-    implementation ("androidx.room:room-runtime:2.5.2")
-    annotationProcessor ("androidx.room:room-compiler:2.5.2")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
+    implementation("androidx.room:room-runtime:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
     // LiveData
-    implementation ("androidx.lifecycle:lifecycle-livedata:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-livedata:2.6.2")
     //nav
-    implementation ("androidx.navigation:navigation-fragment:2.7.4")
-    implementation ("androidx.navigation:navigation-ui:2.7.4")
+    implementation("androidx.navigation:navigation-fragment:2.7.4")
+    implementation("androidx.navigation:navigation-ui:2.7.4")
     //material design
-    implementation ("com.google.android.material:material:1.11.0-alpha03")
+    implementation("com.google.android.material:material:1.11.0-alpha03")
 
     // RxJava
-    implementation ("io.reactivex.rxjava2:rxjava:2.2.8")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.8")
     // RxAndroid
-    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
     // Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }

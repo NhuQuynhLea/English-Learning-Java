@@ -3,15 +3,17 @@ package com.example.englishlearning.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "term_table")
-public class Term {
+public class Term implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private int module_id;
     private String word;
     private String definition;
     private String example;
-
+    private String image;
 
     public String getDefinition() {
         return definition;
@@ -48,12 +50,20 @@ public class Term {
         this.id = id;
     }
 
+    public String getImage() {
+        return image;
+    }
 
-    public Term(int module_id, String word, String definition, String example) {
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Term(int module_id, String word, String definition, String example, String image) {
         this.module_id = module_id;
         this.word = word;
         this.definition = definition;
         this.example = example;
+        this.image = image;
     }
 
     public String getWord() {

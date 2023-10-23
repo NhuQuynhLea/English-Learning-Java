@@ -99,7 +99,7 @@ public class CreateModuleFragment extends Fragment {
         binding.btnImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent iGallery = new Intent(Intent.ACTION_PICK);
+                Intent iGallery = new Intent(Intent.ACTION_OPEN_DOCUMENT);
                 iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(iGallery,GALLERY);
             }
@@ -112,7 +112,7 @@ public class CreateModuleFragment extends Fragment {
         if(resultCode == -1){
             if(requestCode == GALLERY){
                  uri = data.getData();
-                imageView.setImageURI(uri);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                imageView.setImageURI(uri);
             }
         }
     }

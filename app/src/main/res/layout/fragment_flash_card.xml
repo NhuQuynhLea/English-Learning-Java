@@ -59,12 +59,17 @@
                     android:layout_height="wrap_content"
                     android:text="Number"
                     android:layout_below="@id/txt_title"/>
+
                 <Button
+                    android:id="@+id/btn_quizz"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="16dp"
-                    android:text="Quiz"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="Quiz" />
                 <TextView
                     android:id="@+id/txt_term"
                     android:layout_width="wrap_content"

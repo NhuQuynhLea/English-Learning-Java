@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,11 +17,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.FragmentCreateFlashCardBinding;
 import com.example.englishlearning.databinding.FragmentFlashCardBinding;
+import com.example.englishlearning.model.ImageResponse;
 import com.example.englishlearning.model.Term;
 import com.example.englishlearning.model.WordResponse;
 import com.example.englishlearning.mylist.ModuleViewModel;
@@ -29,6 +33,7 @@ import com.example.englishlearning.service.RetrofitClient;
 import java.io.IOException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +48,9 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
     private String definition;
     private String example;
     private Term term;
+    private ImageView imgWord;
+    private String imgWordString;
+    final String clientID = "mmGQuiGYiuELEIgl63lSEO8mLjGpl7pHsSyWtxJMDNc";
 
     public CreateFlashCardFragment(int modelId, Term term) {
 
@@ -68,12 +76,12 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                if(term == null){
-                                    Term newTerm = new Term(modelId, wordEdt.getText().toString(), definitionEdt.getText().toString(), exampleEdt.getText().toString());
+                                    Term newTerm = new Term(modelId, wordEdt.getText().toString(), definitionEdt.getText().toString(), exampleEdt.getText().toString(),imgWordString);
                                     flashCardViewModel.addTerm(newTerm);
                                     Toast.makeText(getContext(),"Create new term successful",Toast.LENGTH_SHORT).show();
                                 }
                                 else{
-                                    Term editTerm = new Term(term.getModule_id(),wordEdt.getText().toString(), definitionEdt.getText().toString(), exampleEdt.getText().toString());
+                                    Term editTerm = new Term(term.getModule_id(),wordEdt.getText().toString(), definitionEdt.getText().toString(), exampleEdt.getText().toString(),imgWordString);
                                     editTerm.setId(term.getId());
                                     flashCardViewModel.updateTerm(editTerm);
                                     Toast.makeText(getContext(),"Update term successful",Toast.LENGTH_SHORT).show();
@@ -90,12 +98,13 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
         wordEdt = view.findViewById(R.id.edt_term);
         definitionEdt = view.findViewById(R.id.edt_definition);
         exampleEdt = view.findViewById(R.id.edt_example);
+        imgWord = view.findViewById(R.id.word_image);
         if(term != null){
             wordEdt.setText(term.getWord());
-            if(definitionEdt!= null){
+            if(term.getDefinition()!= null){
                 definitionEdt.setText(term.getDefinition());
             }
-            if(exampleEdt != null){
+            if(term.getExample() != null){
                 exampleEdt.setText(term.getExample());
             }
         }
@@ -127,6 +136,28 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
                                 @Override
                                 public void onFailure(Call<List<WordResponse>> call, Throwable t) {
                                     //listener.onError("Request failed");
+                                }
+                            });
+
+                            Call<ImageResponse> call1 = RetrofitClient
+                                    .getInstance().getApi().getImage(clientID,wordEdt.getText().toString());
+                            call1.enqueue(new Callback<ImageResponse>() {
+                                @Override
+                                public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
+                                    if (!response.isSuccessful()) {
+
+                                        Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
+                                    imgWordString = response.body().getResults().get(0).getUrls().getRegular();
+//                                    Uri imgUri= Uri.parse(imgWordEdt);
+//                                    imgWord.setImageURI(imgUri);
+                                    Glide.with(getContext()).load(response.body().getResults().get(0).getUrls().getRegular()).into(imgWord);
+                                }
+
+                                @Override
+                                public void onFailure(Call<ImageResponse> call, Throwable t) {
+                                    Toast.makeText(getContext(), t.getMessage().toString(), Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
