@@ -1,16 +1,23 @@
 package com.example.englishlearning.quizz;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +41,11 @@ public class QuizzFragment extends Fragment {
     private List<Term> flashCards;
     private TextView questionTxt;
     private Button answerBtn;
+    private ImageView imageView;
     private int questions = 0;
+    private EditText answerEdt;
+    private TextView scoreTxt;
+    private int score = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +58,8 @@ public class QuizzFragment extends Fragment {
        binding = FragmentQuizzBinding.inflate(inflater,container,false);
         flashCards = new ArrayList<Term>();
         flashCards = (List<Term>) getArguments().getSerializable("flashcardList");
-        //Toast.makeText(getContext(),String.valueOf(flashCards.size()), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(),flashCards.get(0).getDefinition(), Toast.LENGTH_SHORT).show();
-        questionTxt.setText(flashCards.get(0).getDefinition());
+
+
         return binding.getRoot();
     }
 
@@ -58,19 +68,67 @@ public class QuizzFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         initComponents();
-//        while(questions < flashCards.size()){
-//            questionTxt.setText(flashCards.get(questions).getDefinition());
-//            answerBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    questions++;
-//                }
-//            });
-//        }
+        scoreTxt.setText("0");
+        questionTxt.setText(flashCards.get(questions).getDefinition());
+        if (flashCards.get(questions).getImage() != null) {
+            Uri imgUri = Uri.parse(flashCards.get(questions).getImage());
+            Glide.with(getContext()).load(imgUri).into(imageView);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+        if (questions == flashCards.size()-2|| flashCards.size()==1) {
+            answerBtn.setText("Submit");
+           }
+        answerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(answerEdt != null){
+                    if(answerEdt.getText().toString().equals(flashCards.get(questions).getWord())){
+                        score++;
+                        scoreTxt.setText(String.valueOf(score));
+                    }
+                }
+                if (questions == flashCards.size()-2|| flashCards.size()==1) {
+                    answerBtn.setText("Submit");
+                }
+                if (questions == flashCards.size() - 1) {
+                  //  Toast.makeText(getContext(), "Your score:" + score, Toast.LENGTH_SHORT).show();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putInt("score", score);
+                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("Score", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("score", score);
+                    editor.apply();
+
+ //                   Navigation.findNavController(view).navigate(R.id.action_quizzFragment_pop_including_flashCardFragment);
+                    NavController navController = Navigation.findNavController(view);
+
+
+                    Bundle args = new Bundle();
+                    args.putInt("test", 2);
+                    NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.quizzFragment, true).build();
+                    navController.navigate(R.id.action_quizzFragment_pop_including_flashCardFragment, args, navOptions);
+                } else {
+                    questions += 1;
+                    answerEdt.setText("");
+                    questionTxt.setText(flashCards.get(questions).getDefinition());
+                    if (flashCards.get(questions).getImage() != null) {
+                        Uri imgUri = Uri.parse(flashCards.get(questions).getImage());
+                        Glide.with(getContext()).load(imgUri).into(imageView);
+                        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    }
+                }
+
+            }
+        });
     }
+
 
     private void initComponents() {
         questionTxt = binding.txtQuestion;
         answerBtn = binding.btnAnswer;
+        imageView = binding.imageView;
+        answerEdt = binding.edtAnswer;
+        scoreTxt = binding.txtScore;
+
     }
 }

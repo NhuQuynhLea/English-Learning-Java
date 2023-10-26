@@ -23,16 +23,27 @@ public class Module implements Serializable {
     @ColumnInfo(defaultValue = "")
     private String image;
 
+    private int score = 0;
+
     public Module() {
     }
 
 
 
-    public Module(int userId, String title, String description, String image) {
+    public Module(int userId, String title, String description, String image, int score) {
         this.userId = userId;
         this.title = title;
         this.description = description;
         this.image = image;
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public int getId() {

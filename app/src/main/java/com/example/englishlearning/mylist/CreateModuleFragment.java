@@ -75,13 +75,13 @@ public class CreateModuleFragment extends Fragment {
                     }else {
                         image = "";
                     }
-                    Module newModule = new Module(1,title.getText().toString(),description.getText().toString(),image);
+                    Module newModule = new Module(1,title.getText().toString(),description.getText().toString(),image,0);
                     moduleViewModel.addModule(newModule);
 
                     Toast.makeText(getContext(),"Create new module successful",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Module editModule = new Module(1,title.getText().toString(),description.getText().toString(),image );
+                    Module editModule = new Module(1,title.getText().toString(),description.getText().toString(),image,0 );
                     editModule.setId(module.getId());
                     moduleViewModel.updateModule(editModule);
                     Toast.makeText(getContext(),"Update module successful",Toast.LENGTH_SHORT).show();
