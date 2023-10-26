@@ -53,6 +53,7 @@
                     android:text="Text"
                     style="@style/TextAppearance.AppCompat.Title"
                     />
+                
                 <TextView
                     android:id="@+id/txt_num"
                     android:layout_width="wrap_content"

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,6 +89,9 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
                 popupMenu.show();
             }
         });
+        holder.progressBar.setProgress(module.getScore());
+        holder.progressBar.setMax(100);
+
     }
 
     @Override
@@ -108,6 +112,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
         CardView cardView;
         ImageView imageView;
         ImageView menu;
+        ProgressBar progressBar;
         public MyViewHolder(@NonNull ItemMylistBinding itemView) {
             super(itemView.getRoot());
             title = itemView.txtTitle;
@@ -115,6 +120,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
             cardView = itemView.cardView;
             imageView = itemView.imgModule;
             menu = itemView.imgMenu;
+            progressBar = itemView.progressBar;
         }
     }
 

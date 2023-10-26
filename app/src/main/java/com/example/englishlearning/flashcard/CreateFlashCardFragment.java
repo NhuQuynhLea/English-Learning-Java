@@ -125,11 +125,14 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
                                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
-                                    definition = response.body().get(0).getMeanings().get(0).getDefinitions().get(0).getDefinition();
-                                    example = response.body().get(0).getMeanings().get(0).getDefinitions().get(0).getExample();
-                                    Toast.makeText(getContext(), example, Toast.LENGTH_SHORT).show();
-                                    definitionEdt.setText(definition);
-                                    exampleEdt.setText(example);
+                                    if(response.body() != null){
+                                        definition = response.body().get(0).getMeanings().get(0).getDefinitions().get(0).getDefinition();
+                                        example = response.body().get(0).getMeanings().get(0).getDefinitions().get(0).getExample();
+                                        Toast.makeText(getContext(), example, Toast.LENGTH_SHORT).show();
+                                        definitionEdt.setText(definition);
+                                        exampleEdt.setText(example);
+                                    }
+
 
                                 }
 
@@ -149,10 +152,15 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
                                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
                                         return;
                                     }
-                                    imgWordString = response.body().getResults().get(0).getUrls().getRegular();
+                                    if(!response.body().getResults().isEmpty()){
+                                        imgWordString = response.body().getResults().get(0).getUrls().getRegular();
 //                                    Uri imgUri= Uri.parse(imgWordEdt);
 //                                    imgWord.setImageURI(imgUri);
-                                    Glide.with(getContext()).load(response.body().getResults().get(0).getUrls().getRegular()).into(imgWord);
+                                        Glide.with(getContext()).load(response.body().getResults().get(0).getUrls().getRegular()).into(imgWord);
+                                    }else{
+                                        Toast.makeText(getContext(), "Error word", Toast.LENGTH_SHORT).show();
+                                    }
+
                                 }
 
                                 @Override

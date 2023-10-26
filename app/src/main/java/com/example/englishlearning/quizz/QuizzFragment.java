@@ -58,7 +58,7 @@ public class QuizzFragment extends Fragment {
        binding = FragmentQuizzBinding.inflate(inflater,container,false);
         flashCards = new ArrayList<Term>();
         flashCards = (List<Term>) getArguments().getSerializable("flashcardList");
-
+        Toast.makeText(getContext(), String.valueOf(flashCards.size()), Toast.LENGTH_SHORT).show();
 
         return binding.getRoot();
     }
@@ -91,15 +91,11 @@ public class QuizzFragment extends Fragment {
                     answerBtn.setText("Submit");
                 }
                 if (questions == flashCards.size() - 1) {
-                  //  Toast.makeText(getContext(), "Your score:" + score, Toast.LENGTH_SHORT).show();
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("score", score);
                     SharedPreferences sharedPreferences = getContext().getSharedPreferences("Score", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("score", score);
                     editor.apply();
 
- //                   Navigation.findNavController(view).navigate(R.id.action_quizzFragment_pop_including_flashCardFragment);
                     NavController navController = Navigation.findNavController(view);
 
 
@@ -108,6 +104,7 @@ public class QuizzFragment extends Fragment {
                     NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.quizzFragment, true).build();
                     navController.navigate(R.id.action_quizzFragment_pop_including_flashCardFragment, args, navOptions);
                 } else {
+                    Toast.makeText(getContext(), String.valueOf(questions), Toast.LENGTH_SHORT).show();
                     questions += 1;
                     answerEdt.setText("");
                     questionTxt.setText(flashCards.get(questions).getDefinition());

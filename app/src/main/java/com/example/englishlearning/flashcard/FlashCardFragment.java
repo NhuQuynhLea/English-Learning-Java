@@ -85,29 +85,32 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         score = sharedPreferences.getInt("score", 0);
         Toast.makeText(getContext(),String.valueOf(score), Toast.LENGTH_SHORT).show();
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        if(score != 0){
-            Module editModule = new Module(module.getUserId(), module.getTitle(), module.getDescription(), module.getImage(), score);
-            editModule.setId(module.getId());
-            moduleViewModel.updateModule(editModule);
-            Toast.makeText(getContext(),"Update module successful",Toast.LENGTH_SHORT).show();
-            editor.clear();
-            editor.apply();
-        }
+        editor.clear();
+        editor.apply();
+
 
 
         if(module != null){
             flashCardViewModel.getAllTermsById(module.getId()).observe(getViewLifecycleOwner(), new Observer<List<Term>>() {
                 @Override
                 public void onChanged(List<Term> terms) {
-                    flashCardList.addAll(terms);
+                    flashCardList = (ArrayList<Term>) terms;
                     adapter.setTerms(terms);
-                    if(!flashCardList.isEmpty())
+                    if(!flashCardList.isEmpty()){
                         num.setText(flashCardList.size() + " Terms");
+                        if(score != 0) {
+                            Double rate = (double) score/flashCardList.size() *100;
+                            Module editModule = new Module(module.getUserId(), module.getTitle(), module.getDescription(), module.getImage(),rate.intValue());
+                            editModule.setId(module.getId());
+                            moduleViewModel.updateModule(editModule);
+                            Toast.makeText(getContext(), "Update module successful", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
                 }
             });
         }else{
-            Toast.makeText(getContext(),"111", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Error", Toast.LENGTH_SHORT).show();
         }
 
 
