@@ -34,14 +34,17 @@ public class ModuleRepository {
     public LiveData<List<Module>> getAllModules(){
         return allModules;
     }
-    public LiveData<List<Module>> searchModules(String searchQuery){
-        return moduleDAO.searchModules(searchQuery);
+    public LiveData<List<Module>> searchModules(String searchQuery, int userId){
+        return moduleDAO.searchModules(searchQuery, userId);
     }
-    public LiveData<List<Module>> getAllModulesByTitle(){
-        return moduleDAO.getAllModulesByTitle();
+    public LiveData<List<Module>> getAllModulesByTitle(int userId){
+        return moduleDAO.getAllModulesByTitle(userId);
     }
-    public LiveData<List<Module>> getAllModulesByTitleDESC(){
-        return moduleDAO.getAllModulesByTitleDESC();
+    public LiveData<List<Module>> getAllModulesByTitleDESC(int userId){
+        return moduleDAO.getAllModulesByTitleDESC(userId);
+    }
+    public LiveData<List<Module>> getAllModulesByUserId(int userId){
+        return moduleDAO.getAllTermsByUserId(userId);
     }
 
     public static class InsertModuleAsyncTask extends AsyncTask<Module,Void,Void> {

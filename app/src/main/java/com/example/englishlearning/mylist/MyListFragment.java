@@ -1,6 +1,8 @@
 package com.example.englishlearning.mylist;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,6 +47,7 @@ public class MyListFragment extends Fragment implements SelectListener {
     private ArrayList<Module> moduleList ;
     private FlashCardViewModel flashCardViewModel;
     private boolean ascending = true;
+    private int userId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,11 @@ public class MyListFragment extends Fragment implements SelectListener {
       binding = FragmentMyListBinding.inflate(inflater,container,false);
        moduleViewModel = new ViewModelProvider(this).get(ModuleViewModel.class);
        flashCardViewModel = new ViewModelProvider(this).get(FlashCardViewModel.class);
-        moduleViewModel.getAllModules().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("userId", -1);
+        Toast.makeText(getContext(),"userId"+userId,Toast.LENGTH_SHORT).show();
+        moduleViewModel.getAllModulesByUserId(userId).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
             @Override
             public void onChanged(List<Module> modules) {
                 Log.e("onChanged: ",String.valueOf(modules.size()) );
@@ -101,7 +108,7 @@ public class MyListFragment extends Fragment implements SelectListener {
 
     private void onSortItem(boolean ascending) {
         if(ascending){
-            moduleViewModel.getAllModulesByTitleDESC().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+            moduleViewModel.getAllModulesByTitleDESC(userId).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
                 @Override
                 public void onChanged(List<Module> modules) {
                     adapter.setModules(modules);
@@ -109,7 +116,7 @@ public class MyListFragment extends Fragment implements SelectListener {
             });
             Toast.makeText(getContext(), "Sort by title descending", Toast.LENGTH_SHORT).show();
         }else{
-            moduleViewModel.getAllModulesByTitle().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+            moduleViewModel.getAllModulesByTitle(userId).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
                 @Override
                 public void onChanged(List<Module> modules) {
                     adapter.setModules(modules);
@@ -135,7 +142,7 @@ public class MyListFragment extends Fragment implements SelectListener {
         recyclerView.setAdapter(adapter);
     }
     private void filterList(String query){
-        moduleViewModel.searchModules(query).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+        moduleViewModel.searchModules(query, userId).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
             @Override
             public void onChanged(List<Module> modules) {
                 adapter.setModules(modules);

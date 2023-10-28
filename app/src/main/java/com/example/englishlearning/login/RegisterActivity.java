@@ -31,14 +31,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         initComponents();
-        userViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                Toast.makeText(RegisterActivity.this,"listUsers.size()",Toast.LENGTH_SHORT).show();
-
-            }
-
-        });
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override

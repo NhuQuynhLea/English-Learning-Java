@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.englishlearning.MainActivity;
 import com.example.englishlearning.databinding.ActivityLoginBinding;
@@ -34,44 +37,42 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         initComponents();
-        userViewModel.allUsers.observe(this, new Observer<List<User>>() {
+        userViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
                 listUsers = (ArrayList<User>) users;
             }
 
         });
-        Log.e("onCreate: ", userViewModel.getAllUsers().toString());
-        listUsers = (ArrayList<User>) userViewModel.getAllUsers().getValue();
         loginBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 if(listUsers != null){
-                    for(User i : listUsers) {
-                        if(i.getUsername().equals("q") && i.getPassword().equals("12345")){
-//                            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("userID", 0);
-//                            SharedPreferences.Editor editor = sharedPref.edit();
-//                            editor.putInt("id",i.getId());
-//                            editor.apply();
-//
-//                            Bundle bundle = new Bundle();
-//                            bundle.putInt("ID", i.getId());
-//                            Fragment moduleFragment = new CreateModuleFragment();
-//                            moduleFragment.setArguments(bundle);
-//                            FragmentManager fragmentManager = getSupportFragmentManager();
-//                            FragmentTransaction transaction = fragmentManager.beginTransaction();
-//                            transaction.replace(R.id.frame_layout_create, moduleFragment);
-//                            transaction.commit();
+                    if(nameEdt.getText().toString().isEmpty()){
+                        Toast.makeText(LoginActivity.this,"Please enter username",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(passwordEdt.getText().toString().isEmpty()){
+                        Toast.makeText(LoginActivity.this,"Please enter password",Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        for(User i : listUsers) {
 
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            if(i.getUsername().equals(nameEdt.getText().toString()) && i.getPassword().equals(passwordEdt.getText().toString())){
+                                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putInt("userId", i.getId());
+                                editor.apply();
+
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+
+                            }
 
                         }
                     }
-                    //Toast.makeText(LoginActivity.this,listUsers.get(1).getUsername(),Toast.LENGTH_SHORT).show();
-                }
 
+                }
 
             }
         });

@@ -1,6 +1,9 @@
 package com.example.englishlearning.mylist;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +61,11 @@ public class CreateModuleFragment extends Fragment {
         Bundle bundle = new Bundle();
         module = new Module();
         module = (Module) getArguments().getSerializable("updateModule");
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("userId", -1);
+
+
         if(module != null){
             title.setText(module.getTitle());
             if(module.getDescription() != null){
@@ -75,13 +84,18 @@ public class CreateModuleFragment extends Fragment {
                     }else {
                         image = "";
                     }
-                    Module newModule = new Module(1,title.getText().toString(),description.getText().toString(),image,0);
+                    Module newModule = new Module(userId,title.getText().toString(),description.getText().toString(),image,0);
                     moduleViewModel.addModule(newModule);
 
                     Toast.makeText(getContext(),"Create new module successful",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Module editModule = new Module(1,title.getText().toString(),description.getText().toString(),image,0 );
+                    if(uri != null){
+                        image = uri.toString();
+                    }else {
+                        image = "";
+                    }
+                    Module editModule = new Module(userId,title.getText().toString(),description.getText().toString(),image,0 );
                     editModule.setId(module.getId());
                     moduleViewModel.updateModule(editModule);
                     Toast.makeText(getContext(),"Update module successful",Toast.LENGTH_SHORT).show();
@@ -112,6 +126,13 @@ public class CreateModuleFragment extends Fragment {
         if(resultCode == -1){
             if(requestCode == GALLERY){
                  uri = data.getData();
+                 ContentResolver contentResolver = getContext().getContentResolver();
+                 int takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+                 if (uri != null) {
+                     contentResolver.takePersistableUriPermission(uri, takeFlags);
+                 }
+                 Log.e("AHIHIHIHIHI", "onActivityResult: " + uri);
+
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 imageView.setImageURI(uri);
             }
         }
