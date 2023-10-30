@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.FragmentShowFlashCardBinding;
 import com.example.englishlearning.model.Term;
@@ -37,6 +39,7 @@ public class ShowFlashCardFragment extends AppCompatDialogFragment {
      TextView word;
      ImageView vol;
      String uri;
+     ImageView img;
 
     public ShowFlashCardFragment(Term term) {
 
@@ -50,11 +53,11 @@ public class ShowFlashCardFragment extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_show_flash_card, null);
         builder.setView(view);
-        try {
-            onCallApi(term.getWord());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            onCallApi(term.getWord());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,56 +68,61 @@ public class ShowFlashCardFragment extends AppCompatDialogFragment {
             }
         });
         word = view.findViewById(R.id.txt_word);
-        vol = view.findViewById(R.id.img_vol);
+      //  vol = view.findViewById(R.id.img_vol);
         word.setText(term.getWord());
-        vol.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(uri != null){
-                    MediaPlayer player = new MediaPlayer();
-                    try{
-                        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        player.setDataSource(uri);
-                        player.prepare();
-                        player.start();
-                    }catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(getContext(),"Couldn't play audio", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+        img = view.findViewById(R.id.imageView);
+        if(term.getImage()!= null){
+            Uri imgUri= Uri.parse(term.getImage());
+            Glide.with(getContext()).load(imgUri).into(img);
+        }
+//        vol.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(uri != null){
+//                    MediaPlayer player = new MediaPlayer();
+//                    try{
+//                        player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//                        player.setDataSource(uri);
+//                        player.prepare();
+//                        player.start();
+//                    }catch (IOException e) {
+//                        e.printStackTrace();
+//                        Toast.makeText(getContext(),"Couldn't play audio", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            }
+//        });
         return builder.create();
     }
 
-    private void onCallApi(String word) throws IOException {
-        Call<List<WordResponse>> call = RetrofitClient
-                .getInstance().getApi().getWord(word);
-
-
-        call.enqueue(new Callback<List<WordResponse>>() {
-            @Override
-            public void onResponse(Call<List<WordResponse>> call, Response<List<WordResponse>> response) {
-                //  Log.e("onResponse: ", response.errorBody().toString() );
-                if(!response.isSuccessful()){
-
-                    Toast.makeText(getContext(),"Error", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(response.body().get(0).getPhonetics()!= null){
-
-                    uri = response.body().get(0).getPhonetics().get(0).getAudio();
-                    Toast.makeText(getContext(), uri, Toast.LENGTH_SHORT).show();
-//                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<WordResponse>> call, Throwable t) {
-                //listener.onError("Request failed");
-            }
-        });
-
-    }
+//    private void onCallApi(String word) throws IOException {
+//        Call<List<WordResponse>> call = RetrofitClient
+//                .getInstance().getApi().getWord(word);
+//
+//
+//        call.enqueue(new Callback<List<WordResponse>>() {
+//            @Override
+//            public void onResponse(Call<List<WordResponse>> call, Response<List<WordResponse>> response) {
+//                //  Log.e("onResponse: ", response.errorBody().toString() );
+//                if(!response.isSuccessful()){
+//
+//                    Toast.makeText(getContext(),"Error", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//                if(response.body().get(0).getPhonetics()!= null){
+//
+//                    uri = response.body().get(0).getPhonetics().get(0).getAudio();
+//                    Toast.makeText(getContext(), uri, Toast.LENGTH_SHORT).show();
+////                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<WordResponse>> call, Throwable t) {
+//                //listener.onError("Request failed");
+//            }
+//        });
+//
+//    }
 }

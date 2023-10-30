@@ -44,7 +44,10 @@ public class ModuleRepository {
         return moduleDAO.getAllModulesByTitleDESC(userId);
     }
     public LiveData<List<Module>> getAllModulesByUserId(int userId){
-        return moduleDAO.getAllTermsByUserId(userId);
+        return moduleDAO.getAllModulesByUserId(userId);
+    }
+    public LiveData<List<Module>> getRevisionModules(int userId){
+        return moduleDAO.getRevisionModules(userId);
     }
 
     public static class InsertModuleAsyncTask extends AsyncTask<Module,Void,Void> {

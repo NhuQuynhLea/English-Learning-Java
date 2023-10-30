@@ -33,5 +33,8 @@ public interface ModuleDAO {
     LiveData<List<Module>> getAllModulesByTitleDESC(int userId);
 
     @Query("SELECT * FROM module_table WHERE userId = :userId")
-    LiveData<List<Module>> getAllTermsByUserId(int userId);
+    LiveData<List<Module>> getAllModulesByUserId(int userId);
+    @Query("SELECT * FROM module_table WHERE userId = :userId AND score < 30  ORDER BY score ASC")
+    LiveData<List<Module>> getRevisionModules(int userId);
+
 }

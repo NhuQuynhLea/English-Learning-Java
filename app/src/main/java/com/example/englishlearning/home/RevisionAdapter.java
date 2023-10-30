@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,34 +17,35 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.ItemHomelistBinding;
-import com.example.englishlearning.databinding.ItemMylistBinding;
+import com.example.englishlearning.databinding.ItemRevisionlistBinding;
 import com.example.englishlearning.model.Module;
 import com.example.englishlearning.mylist.SelectListener;
 
 import java.util.List;
 
-public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.MyViewHolder> {
 
-    List<Module> recommendModules ;
+public class RevisionAdapter extends RecyclerView.Adapter<RevisionAdapter.MyViewHolder> {
+
+    List<Module> revisionModules ;
     Context context;
     private SelectListener listener;
 
-    public RecommendAdapter(List<Module> listModules, Context context, SelectListener listener) {
-        this.recommendModules = listModules;
+    public RevisionAdapter(List<Module> listModules, Context context, SelectListener listener) {
+        this.revisionModules = listModules;
         this.context = context;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public RecommendAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemHomelistBinding binding = ItemHomelistBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
-        return new RecommendAdapter.MyViewHolder(binding);
+    public RevisionAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemRevisionlistBinding binding = ItemRevisionlistBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        return new RevisionAdapter.MyViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecommendAdapter.MyViewHolder holder, int position) {
-        Module module = recommendModules.get(position);
+    public void onBindViewHolder(@NonNull RevisionAdapter.MyViewHolder holder, int position) {
+        Module module = revisionModules.get(position);
         holder.title.setText(module.getTitle());
         holder.description.setText(module.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -73,17 +75,18 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.MyVi
                 popupMenu.show();
             }
         });
+        holder.progressBar.setProgress(module.getScore());
+        holder.progressBar.setMax(100);
     }
 
     @Override
     public int getItemCount() {
-        return recommendModules.size();
+        return revisionModules.size();
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void setModules(List<Module> modules){
-        this.recommendModules = modules;
-        // Toast.makeText(context,modules.size(),Toast.LENGTH_SHORT).show(); Loi o day
+        this.revisionModules = modules;
         notifyDataSetChanged();
     }
 
@@ -93,13 +96,15 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.MyVi
         CardView cardView;
         ImageView imageView;
         ImageView menu;
-        public MyViewHolder(@NonNull ItemHomelistBinding itemView) {
+        ProgressBar progressBar;
+        public MyViewHolder(@NonNull ItemRevisionlistBinding itemView) {
             super(itemView.getRoot());
             title = itemView.txtTitle;
             description = itemView.txtDescription;
             cardView = itemView.cardView;
             imageView = itemView.imgModule;
             menu = itemView.imgMenu;
+            progressBar = itemView.progressBar;
         }
     }
 

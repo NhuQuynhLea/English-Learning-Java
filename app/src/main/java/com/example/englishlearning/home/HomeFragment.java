@@ -1,5 +1,7 @@
 package com.example.englishlearning.home;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.FragmentHomeBinding;
@@ -33,9 +36,13 @@ public class HomeFragment extends Fragment implements SelectListener {
     private FragmentHomeBinding binding;
     private ModuleViewModel moduleViewModel;
     private FlashCardViewModel flashCardViewModel;
-    private RecyclerView recyclerView;
-    private RecommendAdapter adapter;
-    private ArrayList<Module> moduleList ;
+    private RecyclerView recommentRecyclerView;
+    private RecyclerView revisionRecycleView;
+    private RecommendAdapter recommendAdapter;
+    private RevisionAdapter revisionAdapter;
+    private ArrayList<Module> recommendList ;
+    private ArrayList<Module> revisionList;
+    private int userId;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +55,23 @@ public class HomeFragment extends Fragment implements SelectListener {
         binding = FragmentHomeBinding.inflate(inflater,container,false);
         moduleViewModel = new ViewModelProvider(this).get(ModuleViewModel.class);
         flashCardViewModel = new ViewModelProvider(this).get(FlashCardViewModel.class);
+
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
+        userId = sharedPreferences.getInt("userId", -1);
+        Toast.makeText(getContext(),"userId"+userId,Toast.LENGTH_SHORT).show();
         moduleViewModel.getAllModules().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
             @Override
             public void onChanged(List<Module> modules) {
                 Log.e("onChanged: ",String.valueOf(modules.size()) );
-                moduleList = (ArrayList<Module>) modules;
-                adapter.setModules(modules);
+                recommendList = (ArrayList<Module>) modules;
+                recommendAdapter.setModules(modules);
+
+            }
+        });
+        moduleViewModel.getRevisionModules(userId).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+            @Override
+            public void onChanged(List<Module> modules) {
+                revisionAdapter.setModules(modules);
             }
         });
 
@@ -67,12 +85,19 @@ public class HomeFragment extends Fragment implements SelectListener {
     }
 
     private void initComponents() {
-        recyclerView = binding.recyclerview;
-        moduleList = new ArrayList<>();
-        adapter = new RecommendAdapter(moduleList,getContext(),this);
+        recommentRecyclerView = binding.recyclerview;
+        recommendList = new ArrayList<>();
+        recommendAdapter = new RecommendAdapter(recommendList,getContext(),this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+        recommentRecyclerView.setLayoutManager(linearLayoutManager);
+        recommentRecyclerView.setAdapter(recommendAdapter);
+
+        revisionRecycleView = binding.recyclerviewRevision;
+        revisionList = new ArrayList<>();
+        revisionAdapter = new RevisionAdapter(revisionList,getContext(),this);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        revisionRecycleView.setLayoutManager(linearLayoutManager2);
+        revisionRecycleView.setAdapter(revisionAdapter);
     }
 
     @Override
