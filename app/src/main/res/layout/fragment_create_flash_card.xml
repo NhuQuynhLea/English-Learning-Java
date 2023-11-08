@@ -1,34 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".flashcard.CreateFlashCardFragment">
-    <ImageView
-        android:id="@+id/word_image"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:scaleType="centerCrop"
-        />
-    <EditText
-        android:id="@+id/edt_term"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Word"
-        android:layout_below="@id/word_image"/>
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/txt_flashcard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create FlashCard"
+            android:fontFamily="@font/cherrybombone"
+            android:textAppearance="@style/home"
+            android:layout_centerHorizontal="true"
+            />
 
-    <EditText
-        android:id="@+id/edt_definition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Definition"
-        android:layout_below="@+id/edt_term"/>
-    <EditText
-        android:id="@+id/edt_example"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Example"
-        android:layout_below="@+id/edt_definition"/>
+        <ImageView
+            android:id="@+id/word_image"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:layout_marginTop="24dp"
+            android:background="#D9D9D9"
+            android:layout_below="@id/txt_flashcard"
+            />
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_image"
+            android:text="Term"
+            android:fontFamily="@font/baloo2"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="36dp"
+            />
+        <EditText
+            android:id="@+id/edt_term"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="36dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="5dp"
+            android:background="@drawable/edittext_border_shape"
+            android:layout_below="@id/txt_title"/>
+        <TextView
+            android:id="@+id/txt_definition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_term"
+            android:text="Definition"
+            android:fontFamily="@font/baloo2"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="36dp"
+            />
+        <EditText
+            android:id="@+id/edt_definition"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:paddingStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="36dp"
+            android:background="@drawable/edittext_border_shape"
+            android:paddingEnd="5dp"
+            android:layout_below="@+id/txt_definition"/>
+        <TextView
+            android:id="@+id/txt_example"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_definition"
+            android:text="Example"
+            android:fontFamily="@font/baloo2"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="36dp"
+            />
+        <EditText
+            android:id="@+id/edt_example"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="36dp"
+            android:paddingStart="16dp"
+            android:background="@drawable/edittext_border_shape"
+            android:paddingEnd="5dp"
+            android:layout_below="@+id/txt_example"/>
+    </RelativeLayout>
 
-</RelativeLayout>
+
+</ScrollView>

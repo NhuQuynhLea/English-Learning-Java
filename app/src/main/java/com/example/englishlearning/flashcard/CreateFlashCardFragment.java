@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -50,6 +51,7 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
     private Term term;
     private ImageView imgWord;
     private String imgWordString;
+    private TextView flashcardTxt;
     final String clientID = "mmGQuiGYiuELEIgl63lSEO8mLjGpl7pHsSyWtxJMDNc";
 
     public CreateFlashCardFragment(int modelId, Term term) {
@@ -65,7 +67,7 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_create_flash_card, null);
         builder.setView(view)
-                .setTitle("FlashCard")
+                .setTitle("")
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -81,7 +83,7 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
                                     Toast.makeText(getContext(),"Create new term successful",Toast.LENGTH_SHORT).show();
                                 }
                                 else{
-                                    Term editTerm = new Term(term.getModule_id(),wordEdt.getText().toString(), definitionEdt.getText().toString(), exampleEdt.getText().toString(),imgWordString);
+                                    Term editTerm = new Term(term.getModule_id(), term.getWord(), definitionEdt.getText().toString(), exampleEdt.getText().toString(), term.getImage());
                                     editTerm.setId(term.getId());
                                     flashCardViewModel.updateTerm(editTerm);
                                     Toast.makeText(getContext(),"Update term successful",Toast.LENGTH_SHORT).show();
@@ -99,13 +101,19 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
         definitionEdt = view.findViewById(R.id.edt_definition);
         exampleEdt = view.findViewById(R.id.edt_example);
         imgWord = view.findViewById(R.id.word_image);
+        flashcardTxt = view.findViewById(R.id.txt_flashcard);
         if(term != null){
+            flashcardTxt.setText("Edit FlashCard");
             wordEdt.setText(term.getWord());
             if(term.getDefinition()!= null){
                 definitionEdt.setText(term.getDefinition());
             }
             if(term.getExample() != null){
                 exampleEdt.setText(term.getExample());
+            }
+            if(term.getImage()!= null){
+                Uri imgUri= Uri.parse(term.getImage());
+                Glide.with(getContext()).load(imgUri).into(imgWord);
             }
         }
         else{
@@ -156,11 +164,12 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
                                         imgWordString = response.body().getResults().get(0).getUrls().getRegular();
 //                                    Uri imgUri= Uri.parse(imgWordEdt);
 //                                    imgWord.setImageURI(imgUri);
-                                        Glide.with(getContext()).load(response.body().getResults().get(0).getUrls().getRegular()).into(imgWord);
+
                                     }else{
                                         Toast.makeText(getContext(), "Error word", Toast.LENGTH_SHORT).show();
+                                        imgWordString = "";
                                     }
-
+                                    Glide.with(getContext()).load(response.body().getResults().get(0).getUrls().getRegular()).into(imgWord);
                                 }
 
                                 @Override

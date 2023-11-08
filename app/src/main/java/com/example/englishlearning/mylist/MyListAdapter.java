@@ -33,6 +33,7 @@ import com.example.englishlearning.model.Module;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHolder> {
 
@@ -57,7 +58,6 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Module module = listModules.get(position);
         holder.title.setText(module.getTitle());
-        holder.description.setText(module.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +67,14 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
         if(!Objects.equals(module.getImage(), "")){
             Uri imgUri= Uri.parse(module.getImage());
             holder.imageView.setImageURI(imgUri);
+        }else{
+            int[] images = new int[4];
+            images[0] = R.drawable.bg1;
+            images[1] = R.drawable.bg2;
+            images[2] = R.drawable.bg3;
+            images[3] = R.drawable.bg4;
+            int idx = new Random().nextInt(images.length);
+            holder.imageView.setImageResource(images[idx]);
         }
 
         holder.menu.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +116,7 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView title;
-        TextView description;
+
         CardView cardView;
         ImageView imageView;
         ImageView menu;
@@ -116,7 +124,6 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.MyViewHold
         public MyViewHolder(@NonNull ItemMylistBinding itemView) {
             super(itemView.getRoot());
             title = itemView.txtTitle;
-            description = itemView.txtDescription;
             cardView = itemView.cardView;
             imageView = itemView.imgModule;
             menu = itemView.imgMenu;

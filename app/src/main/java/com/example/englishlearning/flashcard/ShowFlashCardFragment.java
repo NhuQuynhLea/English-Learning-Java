@@ -64,7 +64,7 @@ public class ShowFlashCardFragment extends AppCompatDialogFragment {
                 Toast.makeText(getContext(),term.getDefinition(), Toast.LENGTH_SHORT).show();
                 ShowDetailFlashCardFragment showDetailFlashCardFragment = new ShowDetailFlashCardFragment(term);
                 showDetailFlashCardFragment.show(getParentFragmentManager(),"detail dialog");
-
+                dismiss();
             }
         });
         word = view.findViewById(R.id.txt_word);

@@ -48,8 +48,8 @@ public class ShowDetailFlashCardFragment extends AppCompatDialogFragment {
        exampleTxt = view.findViewById(R.id.txt_example);
        editBtn = view.findViewById(R.id.btn_edit);
        wordTxt = view.findViewById(R.id.txt_word);
-       definitionTxt.setText(term.getDefinition());
-       exampleTxt.setText(term.getExample());
+       definitionTxt.setText("* "+term.getDefinition());
+       exampleTxt.setText("Ex: "+term.getExample());
        wordTxt.setText(term.getWord());
        editBtn.setOnClickListener(new View.OnClickListener() {
            @Override

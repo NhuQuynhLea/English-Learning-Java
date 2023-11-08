@@ -58,8 +58,10 @@
             android:name="module"
             app:argType="com.example.englishlearning.model.Module" />
         <action
-            android:id="@+id/action_flashCardFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            android:id="@+id/action_flashCardFragment_to_myListFragment"
+            app:destination="@id/myListFragment"
+            app:popUpTo="@id/myListFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_flashCardFragment_to_showFlashCardFragment"
             app:destination="@id/showFlashCardFragment" />

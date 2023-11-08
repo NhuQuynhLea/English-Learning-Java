@@ -43,6 +43,7 @@ public class HomeFragment extends Fragment implements SelectListener {
     private ArrayList<Module> recommendList ;
     private ArrayList<Module> revisionList;
     private int userId;
+    private String username;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +59,10 @@ public class HomeFragment extends Fragment implements SelectListener {
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("userId", -1);
+        username = sharedPreferences.getString("username","");
         Toast.makeText(getContext(),"userId"+userId,Toast.LENGTH_SHORT).show();
+
+        binding.txtUsername.setText("Hi, "+username+"!");
         moduleViewModel.getAllModules().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
             @Override
             public void onChanged(List<Module> modules) {
@@ -98,6 +102,7 @@ public class HomeFragment extends Fragment implements SelectListener {
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         revisionRecycleView.setLayoutManager(linearLayoutManager2);
         revisionRecycleView.setAdapter(revisionAdapter);
+
     }
 
     @Override

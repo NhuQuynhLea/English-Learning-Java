@@ -37,9 +37,9 @@
                 android:id="@+id/txt_word"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="New Word"
-                style="@style/TextAppearance.AppCompat.Title"
+                android:gravity="center"
+                android:textAppearance="@style/text"
                 android:layout_toEndOf="@id/img_word"
                 android:layout_marginStart="12dp"/>
             <ImageButton

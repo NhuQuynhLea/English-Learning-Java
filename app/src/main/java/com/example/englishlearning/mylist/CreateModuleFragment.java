@@ -21,18 +21,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.FragmentCreateModuleBinding;
 import com.example.englishlearning.model.Module;
 
+import java.util.Random;
+
 public class CreateModuleFragment extends Fragment {
     private ModuleViewModel moduleViewModel;
     private FragmentCreateModuleBinding binding;
     private EditText title;
     private EditText description;
-    private Button saveBtn;
+    private TextView saveBtn;
     private int userId;
     private final int GALLERY = 1000;
     private ImageView imageView;
@@ -67,6 +70,7 @@ public class CreateModuleFragment extends Fragment {
 
 
         if(module != null){
+            binding.txtModule.setText("Edit Module");
             title.setText(module.getTitle());
             if(module.getDescription() != null){
                 description.setText(module.getDescription());

@@ -22,6 +22,7 @@ import com.example.englishlearning.model.Module;
 import com.example.englishlearning.mylist.SelectListener;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class RevisionAdapter extends RecyclerView.Adapter<RevisionAdapter.MyViewHolder> {
@@ -75,6 +76,14 @@ public class RevisionAdapter extends RecyclerView.Adapter<RevisionAdapter.MyView
                 popupMenu.show();
             }
         });
+        int[] images = new int[3];
+        images[0] = R.drawable.bg1;
+        images[1] = R.drawable.bg2;
+        images[2] = R.drawable.bg3;
+
+        int idx = new Random().nextInt(images.length);
+        holder.imageView.setImageResource(images[idx]);
+
         holder.progressBar.setProgress(module.getScore());
         holder.progressBar.setMax(100);
     }

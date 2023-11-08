@@ -156,7 +156,7 @@ public class MyListFragment extends Fragment implements SelectListener {
         Bundle bundle = new Bundle();
         bundle.putSerializable("module",module);
 
-        Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_flashCardFragment,bundle);
+        Navigation.findNavController(view).navigate(R.id.action_myListFragment_to_flashCardFragment,bundle);
     }
 
     @Override

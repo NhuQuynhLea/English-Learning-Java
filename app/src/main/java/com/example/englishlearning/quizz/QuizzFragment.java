@@ -31,6 +31,7 @@ import com.example.englishlearning.service.RetrofitClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +41,7 @@ public class QuizzFragment extends Fragment {
     private FragmentQuizzBinding binding;
     private List<Term> flashCards;
     private TextView questionTxt;
-    private Button answerBtn;
+    private TextView answerBtn;
     private ImageView imageView;
     private int questions = 0;
     private EditText answerEdt;
@@ -69,6 +70,8 @@ public class QuizzFragment extends Fragment {
 
         initComponents();
         scoreTxt.setText("0");
+        int[] images = new int[flashCards.size()];
+
         questionTxt.setText(flashCards.get(questions).getDefinition());
         if (flashCards.get(questions).getImage() != null) {
             Uri imgUri = Uri.parse(flashCards.get(questions).getImage());

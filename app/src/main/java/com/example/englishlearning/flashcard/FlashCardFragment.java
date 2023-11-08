@@ -45,6 +45,7 @@ import com.example.englishlearning.quizz.QuizzFragment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 
 public class FlashCardFragment extends Fragment implements OpenDialogListener  {
@@ -58,6 +59,7 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
     private ImageView imgBackground;
     private TextView title;
     private TextView num;
+    private TextView percent;
     private int score = 0;
     private ModuleViewModel moduleViewModel;
 
@@ -78,7 +80,7 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
          module = new Module();
         module = (Module) getArguments().getSerializable("module");
 
-//        score = getArguments().getInt("test");
+
         Toast.makeText(getContext(),String.valueOf(module.getScore()), Toast.LENGTH_SHORT).show();
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("Score", Context.MODE_PRIVATE);
@@ -88,6 +90,10 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         editor.clear();
         editor.apply();
 
+//        if(score != 0){
+//            Double rate = (double) score/flashCardList.size() *100;
+//            percent.setText(String.valueOf(rate) + " %");
+//        }
 
 
         if(module != null){
@@ -100,7 +106,8 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
                         num.setText(flashCardList.size() + " Terms");
                         if(score != 0) {
                             Double rate = (double) score/flashCardList.size() *100;
-                            Module editModule = new Module(module.getUserId(), module.getTitle(), module.getDescription(), module.getImage(),rate.intValue());
+                            binding.txtPercent.setText(Math.round(rate)+" %");
+                            Module editModule = new Module(module.getUserId(), module.getTitle(), module.getDescription(), module.getImage(), (int) Math.round(rate));
                             editModule.setId(module.getId());
                             moduleViewModel.updateModule(editModule);
                             Toast.makeText(getContext(), "Update module successful", Toast.LENGTH_SHORT).show();
@@ -117,7 +124,7 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_flashCardFragment_to_mainFragment);
+                Navigation.findNavController(view).navigate(R.id.action_flashCardFragment_to_myListFragment);
             }
         });
 
@@ -174,6 +181,10 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         itemTouchHelper.attachToRecyclerView(recyclerView);
         title.setText(module.getTitle());
         num.setText("");
+        percent.setText(String.valueOf(module.getScore()) + " %");
+        if(!module.getDescription().isEmpty()){
+            binding.txtDescription.setText(module.getDescription());
+        }
 
     }
 
@@ -186,11 +197,20 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         progressBar = binding.progressBar;
         title = binding.txtTitle;
         num = binding.txtNum;
+        percent = binding.txtPercent;
         imgBackground = binding.imageView;
         if(!Objects.equals(module.getImage(), "")) {
             Uri imgUri = Uri.parse(module.getImage());
             imgBackground.setImageURI(imgUri);
             imgBackground.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }else{
+            int[] images = new int[4];
+            images[0] = R.drawable.bg1;
+            images[1] = R.drawable.bg2;
+            images[2] = R.drawable.bg3;
+            images[3] = R.drawable.bg4;
+            int idx = new Random().nextInt(images.length);
+            imgBackground.setImageResource(images[idx]);
         }
      }
 

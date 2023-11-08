@@ -13,8 +13,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="My List"
-        android:textSize="27dp"
-        android:textStyle="bold"
+        android:fontFamily="@font/cherrybombone"
+        android:textAppearance="@style/home"
         />
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -38,19 +38,21 @@
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:defaultQueryHint="Search here..."
+                app:defaultQueryHint="Search modules..."
                 app:iconifiedByDefault="false"
                 />
         </androidx.cardview.widget.CardView>
-        <ImageButton
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/btn_sort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_filter_alt_24"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/outline_filter_alt_24"
             android:layout_gravity="center"
-            android:scaleX="1.25"
-            android:scaleY="1.25"
             android:background="@android:color/transparent"
+            app:shapeAppearanceOverlay="@style/Circular"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
+            android:layout_marginEnd="5dp"
             />
     </LinearLayout>
 
