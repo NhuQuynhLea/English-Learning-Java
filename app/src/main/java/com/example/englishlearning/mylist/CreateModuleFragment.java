@@ -28,6 +28,7 @@ import com.example.englishlearning.R;
 import com.example.englishlearning.databinding.FragmentCreateModuleBinding;
 import com.example.englishlearning.model.Module;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class CreateModuleFragment extends Fragment {
@@ -76,6 +77,10 @@ public class CreateModuleFragment extends Fragment {
                 description.setText(module.getDescription());
             }
             image = module.getImage();
+            if(!Objects.equals(module.getImage(), "")){
+                Uri imgUri= Uri.parse(module.getImage());
+                binding.imageView.setImageURI(imgUri);
+            }
 
         }
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -96,8 +101,6 @@ public class CreateModuleFragment extends Fragment {
                 else{
                     if(uri != null){
                         image = uri.toString();
-                    }else {
-                        image = "";
                     }
                     Module editModule = new Module(userId,title.getText().toString(),description.getText().toString(),image,0 );
                     editModule.setId(module.getId());
@@ -111,7 +114,16 @@ public class CreateModuleFragment extends Fragment {
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_mainFragment);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("startDestination", Context.MODE_PRIVATE);
+                int startDestination = sharedPreferences.getInt("startDestination", -1);
+                Toast.makeText(getContext(),"startdes"+String.valueOf(startDestination), Toast.LENGTH_SHORT);
+                if(startDestination == 0){
+                    Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_homeFragment);
+                }
+                 if(startDestination == 1)
+                    Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_myListFragment);
+                else if(startDestination == 3)
+                    Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_profileFragment);
             }
         });
         binding.btnImage.setOnClickListener(new View.OnClickListener() {

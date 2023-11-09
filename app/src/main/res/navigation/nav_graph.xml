@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -11,6 +11,18 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
 
+        <action
+            android:id="@+id/action_homeFragment_to_myListFragment"
+            app:destination="@id/myListFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_createModuleFragment"
+            app:destination="@id/createModuleFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_flashCardFragment"
+            app:destination="@id/flashCardFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/myListFragment"
@@ -23,6 +35,12 @@
         <action
             android:id="@+id/action_myListFragment_to_createModuleFragment"
             app:destination="@id/createModuleFragment" />
+        <action
+            android:id="@+id/action_myListFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_myListFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/createModuleFragment"
@@ -30,25 +48,23 @@
         android:label="fragment_create_module"
         tools:layout="@layout/fragment_create_module" >
 
-        <action
-            android:id="@+id/action_createModuleFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
         <argument
             android:name="module"
             app:argType="com.example.englishlearning.model.Module" />
-    </fragment>
-    <fragment
-        android:id="@+id/mainFragment"
-        android:name="com.example.englishlearning.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_createModuleFragment"
-            app:destination="@id/createModuleFragment" />
+            android:id="@+id/action_createModuleFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_mainFragment_to_flashCardFragment"
-            app:destination="@id/flashCardFragment" />
+            android:id="@+id/action_createModuleFragment_to_myListFragment"
+            app:destination="@id/myListFragment" />
+        <action
+            android:id="@+id/action_createModuleFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            />
     </fragment>
+
     <fragment
         android:id="@+id/flashCardFragment"
         android:name="com.example.englishlearning.flashcard.FlashCardFragment"
@@ -75,6 +91,11 @@
         <action
             android:id="@+id/action_flashCardFragment_to_quizzFragment2"
             app:destination="@id/quizzFragment" />
+        <action
+            android:id="@+id/action_flashCardFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/showFlashCardFragment"
@@ -100,11 +121,27 @@
             app:argType="com.example.englishlearning.model.Term" />
         <action
             android:id="@+id/action_quizzFragment_pop_including_flashCardFragment"
-            app:launchSingleTop="false"
             app:popUpTo="@id/flashCardFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_quizzFragment_to_flashCardFragment"
-            app:destination="@id/flashCardFragment" />
+            app:destination="@id/flashCardFragment"
+            app:popUpTo="@id/flashCardFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.englishlearning.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_createModuleFragment"
+            app:destination="@id/createModuleFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_myListFragment"
+            app:destination="@id/myListFragment" />
     </fragment>
 </navigation>

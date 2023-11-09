@@ -2,6 +2,7 @@ package com.example.englishlearning.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.example.englishlearning.model.Module;
 import com.example.englishlearning.mylist.SelectListener;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -48,7 +50,7 @@ public class RevisionAdapter extends RecyclerView.Adapter<RevisionAdapter.MyView
     public void onBindViewHolder(@NonNull RevisionAdapter.MyViewHolder holder, int position) {
         Module module = revisionModules.get(position);
         holder.title.setText(module.getTitle());
-        holder.description.setText(module.getDescription());
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,13 +78,19 @@ public class RevisionAdapter extends RecyclerView.Adapter<RevisionAdapter.MyView
                 popupMenu.show();
             }
         });
-        int[] images = new int[3];
-        images[0] = R.drawable.bg1;
-        images[1] = R.drawable.bg2;
-        images[2] = R.drawable.bg3;
+        if(!Objects.equals(module.getImage(), "")){
+            Uri imgUri= Uri.parse(module.getImage());
+            holder.imageView.setImageURI(imgUri);
+        }else {
+            int[] images = new int[3];
+            images[0] = R.drawable.bg1;
+            images[1] = R.drawable.bg2;
+            images[2] = R.drawable.bg3;
 
-        int idx = new Random().nextInt(images.length);
-        holder.imageView.setImageResource(images[idx]);
+            int idx = new Random().nextInt(images.length);
+            holder.imageView.setImageResource(images[idx]);
+        }
+
 
         holder.progressBar.setProgress(module.getScore());
         holder.progressBar.setMax(100);
@@ -101,7 +109,7 @@ public class RevisionAdapter extends RecyclerView.Adapter<RevisionAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView title;
-        TextView description;
+
         CardView cardView;
         ImageView imageView;
         ImageView menu;
@@ -109,7 +117,7 @@ public class RevisionAdapter extends RecyclerView.Adapter<RevisionAdapter.MyView
         public MyViewHolder(@NonNull ItemRevisionlistBinding itemView) {
             super(itemView.getRoot());
             title = itemView.txtTitle;
-            description = itemView.txtDescription;
+
             cardView = itemView.cardView;
             imageView = itemView.imgModule;
             menu = itemView.imgMenu;

@@ -170,7 +170,7 @@ public class MyListFragment extends Fragment implements SelectListener {
 
         Bundle bundle = new Bundle();
         bundle.putSerializable("updateModule",module);
-        Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_createModuleFragment,bundle);
+        Navigation.findNavController(view).navigate(R.id.action_myListFragment_to_createModuleFragment,bundle);
     }
 
 

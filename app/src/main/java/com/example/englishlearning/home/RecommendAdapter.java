@@ -46,7 +46,6 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.MyVi
     public void onBindViewHolder(@NonNull RecommendAdapter.MyViewHolder holder, int position) {
         Module module = recommendModules.get(position);
         holder.title.setText(module.getTitle());
-        holder.description.setText(module.getDescription());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,14 +96,14 @@ public class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView title;
-        TextView description;
+
         CardView cardView;
         ImageView imageView;
         ImageView menu;
         public MyViewHolder(@NonNull ItemHomelistBinding itemView) {
             super(itemView.getRoot());
             title = itemView.txtTitle;
-            description = itemView.txtDescription;
+
             cardView = itemView.cardView;
             imageView = itemView.imgModule;
             menu = itemView.imgMenu;

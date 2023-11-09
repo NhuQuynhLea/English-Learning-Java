@@ -28,6 +28,7 @@ public class UserViewModel extends AndroidViewModel {
     public void updateUser(User user){
         repository.updateUser(user);
     }
+    public LiveData<User> findUser(int userId) {return repository.findUser(userId);}
 
     public LiveData<List<User>> getAllUsers(){
         return allUsers;

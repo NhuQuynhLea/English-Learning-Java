@@ -1,12 +1,14 @@
 package com.example.englishlearning.quizz;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -60,7 +62,13 @@ public class QuizzFragment extends Fragment {
         flashCards = new ArrayList<Term>();
         flashCards = (List<Term>) getArguments().getSerializable("flashcardList");
         Toast.makeText(getContext(), String.valueOf(flashCards.size()), Toast.LENGTH_SHORT).show();
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Navigation.findNavController(view).navigate(R.id.action_quizzFragment_pop_including_flashCardFragment);
+            }
+        });
         return binding.getRoot();
     }
 
@@ -94,18 +102,29 @@ public class QuizzFragment extends Fragment {
                     answerBtn.setText("Submit");
                 }
                 if (questions == flashCards.size() - 1) {
-                    SharedPreferences sharedPreferences = getContext().getSharedPreferences("Score", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("score", score);
-                    editor.apply();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("");
+                    builder.setMessage("Finish, your rate: "+ score+"/"+flashCards.size());
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SharedPreferences sharedPreferences = getContext().getSharedPreferences("Score", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("score", score);
+                            editor.apply();
 
-                    NavController navController = Navigation.findNavController(view);
+                            NavController navController = Navigation.findNavController(view);
 
 
-                    Bundle args = new Bundle();
-                    args.putInt("test", 2);
-                    NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.quizzFragment, true).build();
-                    navController.navigate(R.id.action_quizzFragment_pop_including_flashCardFragment, args, navOptions);
+                            Bundle args = new Bundle();
+                            args.putInt("test", 2);
+                            NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.quizzFragment, true).build();
+                            navController.navigate(R.id.action_quizzFragment_pop_including_flashCardFragment, args, navOptions);
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
                 } else {
                     Toast.makeText(getContext(), String.valueOf(questions), Toast.LENGTH_SHORT).show();
                     questions += 1;

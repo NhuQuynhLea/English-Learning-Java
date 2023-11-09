@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.englishlearning.model.Module;
 import com.example.englishlearning.model.User;
 
 import java.util.List;
@@ -19,5 +20,6 @@ public interface UserDAO {
     void updateUser(User user);
     @Query("SELECT * FROM user_table")
     LiveData<List<User>> getAllUsers();
-
+    @Query("SELECT * FROM user_table WHERE  id = :userId")
+    LiveData<User> findUser(int userId);
 }

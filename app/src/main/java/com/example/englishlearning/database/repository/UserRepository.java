@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.englishlearning.database.AppDatabase;
 import com.example.englishlearning.database.dao.UserDAO;
+import com.example.englishlearning.model.Module;
 import com.example.englishlearning.model.User;
 
 import java.util.List;
@@ -29,7 +30,9 @@ public class UserRepository {
     public LiveData<List<User>> getAllUsers(){
        return allUsers;
     }
-
+    public LiveData<User> findUser(int userId){
+        return userDAO.findUser(userId);
+    }
     public static class InsertUserAsyncTask extends AsyncTask<User,Void,Void>{
         private UserDAO userDAO;
         private InsertUserAsyncTask (UserDAO userDAO){

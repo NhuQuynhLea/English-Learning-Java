@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment implements SelectListener {
         Bundle bundle = new Bundle();
         bundle.putSerializable("module",module);
 
-        Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_flashCardFragment,bundle);
+        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_flashCardFragment,bundle);
     }
 
     @Override
@@ -123,6 +123,6 @@ public class HomeFragment extends Fragment implements SelectListener {
     public void onEdit(Module module, View view) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("updateModule",module);
-        Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_createModuleFragment,bundle);
+        Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_createModuleFragment,bundle);
     }
 }

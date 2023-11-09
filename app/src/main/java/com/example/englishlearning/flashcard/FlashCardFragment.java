@@ -81,7 +81,7 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         module = (Module) getArguments().getSerializable("module");
 
 
-        Toast.makeText(getContext(),String.valueOf(module.getScore()), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),String.valueOf(module.getScore()), Toast.LENGTH_SHORT).show();
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("Score", Context.MODE_PRIVATE);
         score = sharedPreferences.getInt("score", 0);
@@ -124,7 +124,15 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_flashCardFragment_to_myListFragment);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("startDestination", Context.MODE_PRIVATE);
+                int startDestination = sharedPreferences.getInt("startDestination", -1);
+                Toast.makeText(getContext(),"startdes"+String.valueOf(startDestination), Toast.LENGTH_SHORT);
+                if(startDestination == 0){
+                    Navigation.findNavController(view).navigate(R.id.action_flashCardFragment_to_homeFragment);
+                }
+
+                else if(startDestination == 1)
+                    Navigation.findNavController(view).navigate(R.id.action_flashCardFragment_to_myListFragment);
             }
         });
 
@@ -154,9 +162,13 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
         binding.btnQuizz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("flashcardList",flashCardList);
-                Navigation.findNavController(view).navigate(R.id.action_flashCardFragment_to_quizzFragment,bundle);
+                if(flashCardList.isEmpty()){
+                    Toast.makeText(getContext(),"You have no card to practice", Toast.LENGTH_SHORT).show();
+                }else{
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("flashcardList",flashCardList);
+                    Navigation.findNavController(view).navigate(R.id.action_flashCardFragment_to_quizzFragment,bundle);
+                }
 
             }
         });
