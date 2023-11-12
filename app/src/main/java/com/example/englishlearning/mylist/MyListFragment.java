@@ -64,7 +64,7 @@ public class MyListFragment extends Fragment implements SelectListener {
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("userId", -1);
-        Toast.makeText(getContext(),"userId"+userId,Toast.LENGTH_SHORT).show();
+   //     Toast.makeText(getContext(),"userId"+userId,Toast.LENGTH_SHORT).show();
         moduleViewModel.getAllModulesByUserId(userId).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
             @Override
             public void onChanged(List<Module> modules) {

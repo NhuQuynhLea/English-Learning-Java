@@ -116,14 +116,15 @@ public class CreateModuleFragment extends Fragment {
             public void onClick(View view) {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("startDestination", Context.MODE_PRIVATE);
                 int startDestination = sharedPreferences.getInt("startDestination", -1);
-                Toast.makeText(getContext(),"startdes"+String.valueOf(startDestination), Toast.LENGTH_SHORT);
+             //   Toast.makeText(getContext(),"startdes"+String.valueOf(startDestination), Toast.LENGTH_SHORT);
                 if(startDestination == 0){
                     Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_homeFragment);
                 }
-                 if(startDestination == 1)
+                 else if(startDestination == 1)
                     Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_myListFragment);
-                else if(startDestination == 3)
+                 else if(startDestination == 3)
                     Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_profileFragment);
+                 else Navigation.findNavController(view).navigate(R.id.action_createModuleFragment_to_splashFragment);
             }
         });
         binding.btnImage.setOnClickListener(new View.OnClickListener() {

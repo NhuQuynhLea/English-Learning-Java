@@ -56,9 +56,10 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this,"Please enter password",Toast.LENGTH_SHORT).show();
                     }
                     else {
+                        int flag = 0;
                         for(User i : listUsers) {
-
                             if(i.getUsername().equals(nameEdt.getText().toString()) && i.getPassword().equals(passwordEdt.getText().toString())){
+                                flag = 1;
                                 SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putInt("userId", i.getId());
@@ -71,6 +72,10 @@ public class LoginActivity extends AppCompatActivity {
                             }
 
                         }
+                        if(flag == 0){
+                            Toast.makeText(LoginActivity.this,"This account does not exist",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                 }

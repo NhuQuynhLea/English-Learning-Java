@@ -138,7 +138,7 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
                     }
 //                    if(!response.body().get(0).getPhonetics().isEmpty()) {
                      phonetics.put(position,uri);
-                        Toast.makeText(context, uri, Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(context, uri, Toast.LENGTH_SHORT).show();
 //                    }
                 }
 

@@ -61,7 +61,7 @@ public class QuizzFragment extends Fragment {
        binding = FragmentQuizzBinding.inflate(inflater,container,false);
         flashCards = new ArrayList<Term>();
         flashCards = (List<Term>) getArguments().getSerializable("flashcardList");
-        Toast.makeText(getContext(), String.valueOf(flashCards.size()), Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(getContext(), String.valueOf(flashCards.size()), Toast.LENGTH_SHORT).show();
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

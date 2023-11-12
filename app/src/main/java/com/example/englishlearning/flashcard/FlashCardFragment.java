@@ -85,7 +85,7 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("Score", Context.MODE_PRIVATE);
         score = sharedPreferences.getInt("score", 0);
-        Toast.makeText(getContext(),String.valueOf(score), Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(getContext(),String.valueOf(score), Toast.LENGTH_SHORT).show();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
@@ -181,6 +181,7 @@ public class FlashCardFragment extends Fragment implements OpenDialogListener  {
     }
 
     private void addCard() {
+        Toast.makeText(getContext(),"ID "+module.getId(), Toast.LENGTH_SHORT).show();
         openDialog(module.getId(), null);
     }
 

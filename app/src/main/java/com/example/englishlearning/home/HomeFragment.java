@@ -60,18 +60,22 @@ public class HomeFragment extends Fragment implements SelectListener {
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("userId", Context.MODE_PRIVATE);
         userId = sharedPreferences.getInt("userId", -1);
         username = sharedPreferences.getString("username","");
-        Toast.makeText(getContext(),"userId"+userId,Toast.LENGTH_SHORT).show();
+ //       Toast.makeText(getContext(),"userId"+userId,Toast.LENGTH_SHORT).show();
 
         binding.txtUsername.setText("Hi, "+username+"!");
-        moduleViewModel.getAllModules().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
-            @Override
-            public void onChanged(List<Module> modules) {
-                Log.e("onChanged: ",String.valueOf(modules.size()) );
-                recommendList = (ArrayList<Module>) modules;
-                recommendAdapter.setModules(modules);
+//        moduleViewModel.getAllModules().observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
+//            @Override
+//            public void onChanged(List<Module> modules) {
+//                Log.e("onChanged: ",String.valueOf(modules.size()) );
+//                recommendList = (ArrayList<Module>) modules;
+//                recommendAdapter.setModules(modules);
+//
+//            }
+//        });
+       // setDataRecommendedList();
 
-            }
-        });
+     //   recommendAdapter.setModules(recommendList);
+
         moduleViewModel.getRevisionModules(userId).observe(getViewLifecycleOwner(), new Observer<List<Module>>() {
             @Override
             public void onChanged(List<Module> modules) {
@@ -85,6 +89,7 @@ public class HomeFragment extends Fragment implements SelectListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         initComponents();
     }
 
@@ -95,6 +100,8 @@ public class HomeFragment extends Fragment implements SelectListener {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recommentRecyclerView.setLayoutManager(linearLayoutManager);
         recommentRecyclerView.setAdapter(recommendAdapter);
+        setDataRecommendedList();
+     //   Toast.makeText(getContext(),String.valueOf(recommendList.size()),Toast.LENGTH_SHORT).show();
 
         revisionRecycleView = binding.recyclerviewRevision;
         revisionList = new ArrayList<>();
@@ -109,7 +116,7 @@ public class HomeFragment extends Fragment implements SelectListener {
     public void onItemClicked(Module module, View view) {
         Bundle bundle = new Bundle();
         bundle.putSerializable("module",module);
-
+    //    Toast.makeText(getContext(),"id "+ module.getId(), Toast.LENGTH_SHORT).show();
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_flashCardFragment,bundle);
     }
 
@@ -124,5 +131,17 @@ public class HomeFragment extends Fragment implements SelectListener {
         Bundle bundle = new Bundle();
         bundle.putSerializable("updateModule",module);
         Navigation.findNavController(view).navigate(R.id.action_homeFragment_to_createModuleFragment,bundle);
+    }
+
+    private void setDataRecommendedList(){
+        Module module1 = new Module(-1,"Sports","Types of sports","",0);
+        Module module2 = new Module(-1,"Animals","Types of animals","",0);
+        Module module3 = new Module(-1,"Subjects","Types of subjects","",0);
+        recommendList.add(module1);
+        recommendList.add(module2);
+        recommendList.add(module3);
+        module1.setId(-1);
+        module2.setId(-2);
+        module3.setId(-3);
     }
 }

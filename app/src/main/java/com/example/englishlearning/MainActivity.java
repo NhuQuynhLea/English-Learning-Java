@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 binding.bottomLayout.setVisibility(View.VISIBLE);
             }else if(destination.getId() == R.id.profileFragment ){
                 binding.bottomLayout.setVisibility(View.VISIBLE);
+            }else if(destination.getId() == R.id.splashFragment ){
+                binding.bottomLayout.setVisibility(View.VISIBLE);
             }
             else {
                 // Hide the bottom navigation bar for other destinations
@@ -75,6 +77,13 @@ public class MainActivity extends AppCompatActivity {
                     editor.apply();
                     routeDestination(startDestinationId,endDestinationId);
                 }
+            if(item.getItemId() == R.id.chatbot){
+                startDestinationId = endDestinationId;
+                endDestinationId = 2;
+                editor.putInt("startDestination", endDestinationId);
+                editor.apply();
+                routeDestination(startDestinationId,endDestinationId);
+            }
             return true;
         });
         binding.fab.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                    Navigation.findNavController(MainActivity.this,R.id.nav_host_container_fragment).navigate(R.id.action_myListFragment_to_createModuleFragment);
                }else if(endDestinationId == 3){
                    Navigation.findNavController(MainActivity.this,R.id.nav_host_container_fragment).navigate(R.id.action_profileFragment_to_createModuleFragment);
+               }else{
+                   Navigation.findNavController(MainActivity.this,R.id.nav_host_container_fragment).navigate(R.id.action_splashFragment_to_createModuleFragment);
                }
 
             }
@@ -102,14 +113,29 @@ public class MainActivity extends AppCompatActivity {
         if(startDestinationId == 0 && endDestinationId == 1){
             Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_homeFragment_to_myListFragment);
         }
+        else if(startDestinationId == 0 && endDestinationId == 2){
+            Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_homeFragment_to_splashFragment);
+        }
         else if(startDestinationId == 0 && endDestinationId == 3){
             Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_homeFragment_to_profileFragment);
         }
         else if(startDestinationId == 1 && endDestinationId == 0){
             Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_myListFragment_to_homeFragment);
         }
+        else if(startDestinationId == 1 && endDestinationId == 2){
+            Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_myListFragment_to_splashFragment);
+        }
         else if(startDestinationId == 1 && endDestinationId == 3){
             Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_myListFragment_to_profileFragment);
+        }
+        else if(startDestinationId == 2 && endDestinationId == 0){
+            Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_splashFragment_to_homeFragment);
+        }
+        else if(startDestinationId == 2 && endDestinationId == 1){
+            Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_splashFragment_to_myListFragment);
+        }
+        else if(startDestinationId == 2 && endDestinationId == 3){
+            Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_splashFragment_to_profileFragment);
         }
         else if(startDestinationId == 3 && endDestinationId == 0){
             Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_profileFragment_to_homeFragment);
@@ -117,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
         else if(startDestinationId == 3 && endDestinationId == 1){
             Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_profileFragment_to_myListFragment);
         }
+        else if(startDestinationId == 3 && endDestinationId == 2){
+            Navigation.findNavController(this,R.id.nav_host_container_fragment).navigate(R.id.action_profileFragment_to_splashFragment);
+        }
+
 
     }
 

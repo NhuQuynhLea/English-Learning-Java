@@ -83,10 +83,15 @@ public class ProfileFragment extends Fragment {
                 btnUpdate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        User newUser = new User(username.getText().toString(),email.getText().toString(), user.getPassword());
-                        newUser.setId(user.getId());
-                        userViewModel.updateUser(newUser);
-                        Toast.makeText(getContext(),"Update user successful", Toast.LENGTH_SHORT).show();
+                        if(username.getText().toString().equals(user.getUsername()) && email.getText().toString().equals(user.getEmail())){
+                            Toast.makeText(getContext(),"Nothing to update", Toast.LENGTH_SHORT).show();
+                        }else{
+                            User newUser = new User(username.getText().toString(),email.getText().toString(), user.getPassword());
+                            newUser.setId(user.getId());
+                            userViewModel.updateUser(newUser);
+                            Toast.makeText(getContext(),"Update user successful", Toast.LENGTH_SHORT).show();
+                        }
+
                         bottomSheetDialog.dismiss();
                     }
                 });

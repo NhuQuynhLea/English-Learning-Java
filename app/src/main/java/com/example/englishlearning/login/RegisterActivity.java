@@ -44,7 +44,10 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this,"Please enter password",Toast.LENGTH_SHORT).show();
                 } else if(emailEdt.getText().toString().isEmpty()){
                     Toast.makeText(RegisterActivity.this,"Please enter email",Toast.LENGTH_SHORT).show();
-                }else{
+                }else if(passwordEdt.getText().toString().length() < 8){
+                    Toast.makeText(RegisterActivity.this,"Password must have at least 8 characters",Toast.LENGTH_SHORT).show();
+                }
+                else{
                     User user = new User(nameEdt.getText().toString(), emailEdt.getText().toString(),passwordEdt.getText().toString());
                     userViewModel.addUser(user);
                     Toast.makeText(RegisterActivity.this,"Create account successful!",Toast.LENGTH_SHORT).show();

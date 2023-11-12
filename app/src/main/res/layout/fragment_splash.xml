@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chatbot.SplashFragment">
+
+    <TextView
+        android:id="@+id/txt_chatbot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hi, I'm ELEA"
+        android:textColor="#8880ED"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/cherrybombone"
+        android:textAppearance="@style/home"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/img_1"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:scaleX="2"
+        android:scaleY="2"/>
+
+    <TextView
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Let's Start"
+        android:textColor="#8880ED"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/loveyalike"
+        android:textAppearance="@style/let_s_start"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/imageView"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
+        android:background="@drawable/start_border_shape"
+        />
+
+</RelativeLayout>

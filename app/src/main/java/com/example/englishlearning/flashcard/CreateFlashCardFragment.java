@@ -131,14 +131,17 @@ public class CreateFlashCardFragment extends AppCompatDialogFragment {
                                     if (!response.isSuccessful()) {
 
                                         Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                                       definitionEdt.setText("");
+                                         exampleEdt.setText("");
                                         return;
                                     }
                                     if(response.body() != null){
                                         definition = response.body().get(0).getMeanings().get(0).getDefinitions().get(0).getDefinition();
                                         example = response.body().get(0).getMeanings().get(0).getDefinitions().get(0).getExample();
-                                        Toast.makeText(getContext(), example, Toast.LENGTH_SHORT).show();
+                                     //   Toast.makeText(getContext(), example, Toast.LENGTH_SHORT).show();
                                         definitionEdt.setText(definition);
                                         exampleEdt.setText(example);
+
                                     }
 
 

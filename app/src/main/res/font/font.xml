@@ -11,4 +11,8 @@
         android:fontStyle="normal"
         android:font="@font/cabin"
         />
+<!--    <font-->
+<!--        android:fontStyle="normal"-->
+<!--        android:font="@font/loveyalike"-->
+<!--        />-->
 </font-family>
