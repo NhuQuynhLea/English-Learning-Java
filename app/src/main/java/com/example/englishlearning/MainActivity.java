@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.bottomLayout.setVisibility(View.VISIBLE);
         BottomNavigationView bottomNavigationView = binding.bottomNavigation;
+        binding.bottomNavigation.setBackground(null);
 
 //        NavController navController = Navigation.findNavController(this,R.id.nav_host_fragment_container);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_container_fragment);

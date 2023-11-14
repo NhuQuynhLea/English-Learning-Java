@@ -124,8 +124,11 @@ public class FlashCardAdapter extends RecyclerView.Adapter<FlashCardAdapter.MyVi
                 }
                 if(response.body().get(0).getPhonetics()!= null){
                     uri = "";
-                    if(!Objects.equals(response.body().get(0).getPhonetics().get(0).getAudio(), ""))
-                     uri = response.body().get(0).getPhonetics().get(0).getAudio();
+                    if(!response.body().get(0).getPhonetics().isEmpty()){
+                        if(!Objects.equals(response.body().get(0).getPhonetics().get(0).getAudio(), ""))
+                            uri = response.body().get(0).getPhonetics().get(0).getAudio();
+                    }
+
                     if(response.body().get(0).getPhonetics().size() > 1){
                         if(!Objects.equals(response.body().get(0).getPhonetics().get(1).getAudio(), "")){
                             uri = response.body().get(0).getPhonetics().get(1).getAudio();
